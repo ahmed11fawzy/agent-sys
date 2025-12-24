@@ -1,0 +1,290 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  :root {
+    /* ========================================
+       LIGHT THEME
+       ======================================== */
+
+    /* --- PRIMARY (Golden/Amber) --- */
+    --color-primary-50: 39 59% 95%;
+    --color-primary-100: 39 59% 91%;
+    --color-primary-200: 39 59% 82%;
+    --color-primary-300: 39 59% 72%;
+    --color-primary-400: 39 59% 63%;
+    --color-primary-500: 39 59% 54%;
+    --color-primary-600: 39 53% 43%;
+    --color-primary-700: 39 51% 32%;
+    --color-primary-800: 39 52% 22%;
+    --color-primary-900: 39 52% 11%;
+    --color-primary: 39 59% 54%; /* Default: 500 */
+
+    /* --- SECONDARY (Deep Navy Blue - Complementary) --- */
+    --color-secondary-50: 220 60% 96%;
+    --color-secondary-100: 220 55% 90%;
+    --color-secondary-200: 220 50% 80%;
+    --color-secondary-300: 220 50% 65%;
+    --color-secondary-400: 220 50% 50%;
+    --color-secondary-500: 220 55% 40%;
+    --color-secondary-600: 220 60% 32%;
+    --color-secondary-700: 220 65% 24%;
+    --color-secondary-800: 220 70% 16%;
+    --color-secondary-900: 220 75% 10%;
+    --color-secondary: 220 55% 40%; /* Default: 500 */
+
+    /* --- ACCENT (Warm Coral/Terracotta) --- */
+    --color-accent-50: 15 70% 96%;
+    --color-accent-100: 15 65% 90%;
+    --color-accent-200: 15 60% 80%;
+    --color-accent-300: 15 55% 68%;
+    --color-accent-400: 15 55% 55%;
+    --color-accent-500: 15 50% 48%;
+    --color-accent-600: 15 50% 40%;
+    --color-accent-700: 15 50% 32%;
+    --color-accent-800: 15 50% 24%;
+    --color-accent-900: 15 50% 15%;
+    --color-accent: 15 50% 48%; /* Default: 500 */
+
+    /* --- NEUTRAL (Warm Gray) --- */
+    --color-neutral-50: 40 20% 98%;
+    --color-neutral-100: 40 15% 95%;
+    --color-neutral-200: 40 10% 88%;
+    --color-neutral-300: 40 8% 75%;
+    --color-neutral-400: 40 6% 55%;
+    --color-neutral-500: 40 5% 45%;
+    --color-neutral-600: 40 6% 35%;
+    --color-neutral-700: 40 8% 25%;
+    --color-neutral-800: 40 10% 16%;
+    --color-neutral-900: 40 12% 10%;
+
+    /* --- SEMANTIC COLORS --- */
+    --color-success: 142 72% 40%;
+    --color-warning: 38 92% 50%;
+    --color-error: 0 72% 51%;
+    --color-info: 199 89% 48%;
+
+    /* --- BACKGROUNDS --- */
+    --color-bg-main: 40 20% 98%;
+    --color-bg-surface: 0 0% 100%;
+    --color-bg-elevated: 40 15% 99%;
+    --color-bg-muted: 40 10% 95%;
+
+    /* --- TEXT --- */
+    --color-text-main: 40 12% 12%;
+    --color-text-muted: 40 8% 45%;
+    --color-text-inverted: 0 0% 100%;
+
+    /* --- BORDERS --- */
+    --color-border: 40 10% 88%;
+    --color-border-focus: 39 59% 54%;
+  }
+
+  .dark {
+    /* ========================================
+       DARK THEME
+       ======================================== */
+
+    /* --- PRIMARY (Golden/Amber - Lighter for dark mode) --- */
+    --color-primary-50: 39 52% 15%;
+    --color-primary-100: 39 52% 20%;
+    --color-primary-200: 39 51% 28%;
+    --color-primary-300: 39 53% 38%;
+    --color-primary-400: 39 59% 50%;
+    --color-primary-500: 39 59% 60%;
+    --color-primary-600: 39 59% 70%;
+    --color-primary-700: 39 59% 78%;
+    --color-primary-800: 39 59% 86%;
+    --color-primary-900: 39 59% 93%;
+    --color-primary: 39 59% 60%; /* Brighter in dark mode */
+
+    /* --- SECONDARY (Deep Navy Blue) --- */
+    --color-secondary-50: 220 75% 12%;
+    --color-secondary-100: 220 70% 18%;
+    --color-secondary-200: 220 65% 28%;
+    --color-secondary-300: 220 60% 40%;
+    --color-secondary-400: 220 55% 52%;
+    --color-secondary-500: 220 55% 62%;
+    --color-secondary-600: 220 50% 72%;
+    --color-secondary-700: 220 50% 80%;
+    --color-secondary-800: 220 55% 88%;
+    --color-secondary-900: 220 60% 94%;
+    --color-secondary: 220 55% 62%;
+
+    /* --- ACCENT (Warm Coral/Terracotta) --- */
+    --color-accent-50: 15 50% 12%;
+    --color-accent-100: 15 50% 18%;
+    --color-accent-200: 15 50% 28%;
+    --color-accent-300: 15 50% 40%;
+    --color-accent-400: 15 55% 52%;
+    --color-accent-500: 15 55% 62%;
+    --color-accent-600: 15 60% 72%;
+    --color-accent-700: 15 65% 80%;
+    --color-accent-800: 15 65% 88%;
+    --color-accent-900: 15 70% 94%;
+    --color-accent: 15 55% 62%;
+
+    /* --- NEUTRAL (Warm Gray - Inverted) --- */
+    --color-neutral-50: 40 12% 8%;
+    --color-neutral-100: 40 10% 12%;
+    --color-neutral-200: 40 8% 18%;
+    --color-neutral-300: 40 6% 28%;
+    --color-neutral-400: 40 5% 42%;
+    --color-neutral-500: 40 6% 55%;
+    --color-neutral-600: 40 8% 68%;
+    --color-neutral-700: 40 10% 80%;
+    --color-neutral-800: 40 15% 90%;
+    --color-neutral-900: 40 20% 96%;
+
+    /* --- SEMANTIC COLORS (Adjusted for dark) --- */
+    --color-success: 142 72% 50%;
+    --color-warning: 38 92% 55%;
+    --color-error: 0 72% 60%;
+    --color-info: 199 89% 55%;
+
+    /* --- BACKGROUNDS --- */
+    --color-bg-main: 40 12% 8%;
+    --color-bg-surface: 40 10% 12%;
+    --color-bg-elevated: 40 8% 16%;
+    --color-bg-muted: 40 6% 18%;
+
+    /* --- TEXT --- */
+    --color-text-main: 40 20% 95%;
+    --color-text-muted: 40 10% 60%;
+    --color-text-inverted: 40 12% 10%;
+
+    /* --- BORDERS --- */
+    --color-border: 40 8% 22%;
+    --color-border-focus: 39 59% 60%;
+  }
+}
+
+/* Smooth transition for theme changes */
+body {
+  transition-property: color, background-color, border-color;
+  transition-timing-function: ease-in-out;
+  transition-duration: 300ms;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.208 0.042 265.755);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
