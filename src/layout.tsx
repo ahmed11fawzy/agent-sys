@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import { useAppSelector } from "./store";
 import { useTranslation } from "react-i18next";
 import ToolBar from "./components/tool-bar/toolbar";
+import { Outlet } from "react-router-dom";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout() {
   const { theme, language } = useAppSelector((state) => state.settings);
   const { i18n } = useTranslation();
 
@@ -27,7 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <AppSidebar />
       <main className="flex w-full flex-col">
         <ToolBar />
-        {children}
+        <Outlet />
       </main>
     </SidebarProvider>
   );
