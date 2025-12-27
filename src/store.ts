@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import settingsReducer from './features/setting-slice';
 import { type TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import coreApiSlice from './features/core-api-slice';
 
 export const store = configureStore({
   reducer: {
     settings: settingsReducer,
+    coreApi: coreApiSlice.reducer,
   },
 });
 

@@ -5,9 +5,9 @@ import { Outlet } from "react-router-dom";
 
 export default function Layout() {
   return (
-    <SidebarProvider>
+    <SidebarProvider className="p-4 pe-8 relative rounded-lg border-0">
       <AppSidebar />
-      <main className="flex w-full flex-col">
+      <main className="flex w-full flex-col  ">
         <ToolBar />
         <Outlet />
       </main>

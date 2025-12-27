@@ -1,4 +1,12 @@
-import { Calendar, Home, Inbox, LogIn, LogOut, Search, Settings } from "lucide-react";
+import {
+  Calendar,
+  Home,
+  Inbox,
+  LogIn,
+  LogOut,
+  Search,
+  Settings,
+} from "lucide-react";
 import { useAppSelector } from "@/store";
 
 import {
@@ -6,7 +14,7 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -14,6 +22,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Separator } from "../ui/separator";
 
 // Menu items.
 const items = [
@@ -43,12 +52,12 @@ const items = [
     icon: Settings,
   },
   {
-    title: "Signin",
+    title: "Sign In",
     url: "/signin",
     icon: LogIn,
   },
   {
-    title: "Signup",
+    title: "Sign Up",
     url: "/signup",
     icon: LogOut,
   },
@@ -64,10 +73,27 @@ export function AppSidebar() {
     document.documentElement.lang = language;
   }, [language, i18n]);
   return (
-    <Sidebar side={language === "ar" ? "right" : "left"}>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>{t("alballd")}</SidebarGroupLabel>
+    <Sidebar
+      side={language === "ar" ? "right" : "left"}
+      className="p-4 border-0"
+    >
+      <SidebarHeader className="  ">
+        <div className="flex items-center gap-2  ">
+          <div className=" ">
+            <img
+              className="w-16 h-16 object-fill "
+              src="https://res.cloudinary.com/doxyvufkz/image/upload/v1766599799/logo192_bzai2h.png"
+              alt={t("alballd")}
+            />
+          </div>
+          <h2 className="text-xl font-semibold leading-12 text-(--primary-300)  h-16">
+            {t("alballd")}
+          </h2>
+        </div>
+      </SidebarHeader>
+      <Separator className=" w-3/4 mx-auto shadow-sm" />
+      <SidebarContent className="rounded-lg border-0 ">
+        <SidebarGroup className="border-0 rounded-lg">
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
