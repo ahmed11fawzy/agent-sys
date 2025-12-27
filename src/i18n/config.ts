@@ -1,49 +1,15 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-// Simple translations for demo
+import ar from './locales/ar.json';
+import en from './locales/en.json';
+
 const resources = {
   en: {
-    translation: {
-      welcome: "Welcome back",
-      Settings: "Settings",
-      language: "Language",
-      theme: "Theme",
-      dark: "Dark",
-      light: "Light",
-      arabic: "Arabic",
-      english: "English",
-      logout: "Logout",
-      signin:"Sign In",
-      Home:"Home",
-      Inbox:"Inbox",
-      Calendar:"Calendar",
-      Search:"Search",
-      alballd:"Al Balad",
-      agent:"Agent",
-      
-
-    }
+    translation: en
   },
   ar: {
-    translation: {
-      welcome: "مرحباً بعودتك",
-      Settings: "الإعدادات",
-      language: "اللغة",
-      theme: "المظهر",
-      dark: "ليلي",
-      light: "نهاري",
-      arabic: "العربية",
-      english: "الإنجليزية",
-      logout: "تسجيل الخروج",
-      signin:"تسجيل الدخول",
-      Home:"الرئيسية",
-      Inbox:"البريد",
-      Calendar:"التقويم",
-      Search:"بحث",
-      alballd:"البلد",
-      agent:"مندوب",    
-    }
+    translation: ar
   }
 };
 

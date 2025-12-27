@@ -1,12 +1,26 @@
 {
-  "dashboard": {
-    "welcome_back": "Welcome back, User",
-    "Login to your account" : "Login to your account",
-    "Sign In" : "Sign In",
-    "Email" : "Email",
-    "Password" : "Password",
-    "Forgot Password" : "Forgot Password",
-    "Don't have an account?" : "Don't have an account?",
-    "Sign Up" : "Sign Up"
-  }
+  "welcome_back": "Welcome back, User",
+  "Login to your account": "Login to your account",
+  "Sign In": "Sign In",
+  "Email": "Email",
+  "Password": "Password",
+  "Forgot Password": "Forgot Password",
+  "Don't have an account?": "Don't have an account?",
+  "Sign Up": "Sign Up",
+  "Dashboard": "Dashboard",
+  "welcome to dashboard ": "welcome to dashboard ",
+  "Settings": "Settings",
+  "language": "Language",
+  "theme": "Theme",
+  "dark": "Dark",
+  "light": "Light",
+  "arabic": "Arabic",
+  "english": "English",
+  "logout": "Logout",
+  "Home": "Home",
+  "Inbox": "Inbox",
+  "Calendar": "Calendar",
+  "Search": "Search",
+  "alballd": "Al Balad",
+  "agent": "Agent"
 }
