@@ -1,10 +1,10 @@
 {
   "welcome_back": "مرحباً،بعودتك",
-  "Login to your account": "تسجيل الدخول إلى حسابك",
+  "Login to your account": "تسجيل الدخول ",
   "Sign In": "تسجيل الدخول",
   "Email": "البريد الالكتروني",
   "Password": "كلمة المرور",
-  "Forgot Password": "نسيت كلمة المرور",
+  "Forgot Password ?": "هل نسيت كلمة المرور؟",
   "Don't have an account?": "ليس لديك حساب؟",
   "Sign Up": "إنشاء حساب ",
   "or": "أو",
@@ -24,5 +24,7 @@
   "Calendar": "التقويم",
   "Search": "بحث",
   "alballd": "البلد",
-  "agent": "مندوب"
+  "Agent": "مندوب",
+  "Leader": "قائد فريق",
+  "Agents": "المناديب"
 }

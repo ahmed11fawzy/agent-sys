@@ -7,9 +7,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useAppSelector } from "@/store";
+import { useTranslation } from "react-i18next";
 
 const Signin = () => {
   const { theme } = useAppSelector((state) => state.settings);
+  const { t } = useTranslation();
   return (
     <div
       className={
@@ -34,7 +36,7 @@ const Signin = () => {
             />
           </CardTitle>
           <CardDescription className="text-center text-lg font-bold text-dark ">
-            Login to your account
+            {t("Login to your account")}
           </CardDescription>
         </CardHeader>
         <CardContent>

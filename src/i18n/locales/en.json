@@ -4,7 +4,7 @@
   "Sign In": "Sign In",
   "Email": "Email",
   "Password": "Password",
-  "Forgot Password": "Forgot Password",
+  "Forgot Password ?": "Forgot Password ?",
   "Don't have an account?": "Don't have an account?",
   "Sign Up": "Sign Up",
   "Dashboard": "Dashboard",
@@ -22,5 +22,7 @@
   "Calendar": "Calendar",
   "Search": "Search",
   "alballd": "Al Balad",
-  "agent": "Agent"
+  "Agent": "Agent",
+  "Leader": "Leader",
+  "Agents": "Agents"
 }

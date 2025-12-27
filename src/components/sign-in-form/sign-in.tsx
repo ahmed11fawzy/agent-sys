@@ -16,8 +16,11 @@ import { Chromium } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
+import { useTranslation } from "react-i18next";
 
 export const SignInForm = () => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   // 1. Define your form.
   const form = useForm<z.infer<typeof signinSchema>>({
@@ -48,9 +51,9 @@ export const SignInForm = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="mb-3 block">Email</FormLabel>
+              <FormLabel className="mb-3 block">{t("Email")}</FormLabel>
               <FormControl>
-                <Input placeholder="email" {...field} />
+                <Input placeholder={t("Email")} {...field} />
               </FormControl>
 
               <FormMessage />
@@ -63,14 +66,14 @@ export const SignInForm = () => {
           render={({ field }) => (
             <FormItem>
               <div className="flex items-center justify-between">
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{t("Password")}</FormLabel>
                 <a href="#" className="text-sm text-muted-foreground">
-                  Forgot Password?
+                  {t("Forgot Password ?")}
                 </a>
               </div>
 
               <FormControl>
-                <Input placeholder="password" type="password" {...field} />
+                <Input placeholder={t("password")} type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -86,7 +89,7 @@ export const SignInForm = () => {
                   defaultValue="agent"
                   value={field.value}
                   onValueChange={field.onChange}
-                  className="flex gap-8"
+                  className="flex gap-8 "
                 >
                   <div className="flex items-center space-x-2 gap-2">
                     <RadioGroupItem
@@ -94,7 +97,7 @@ export const SignInForm = () => {
                       id="option-one"
                       className="fill-accent"
                     />
-                    <Label htmlFor="option-one">Agent</Label>
+                    <Label htmlFor="option-one">{t("Agent")}</Label>
                   </div>
                   <div className="flex items-center space-x-2 gap-2">
                     <RadioGroupItem
@@ -102,7 +105,7 @@ export const SignInForm = () => {
                       id="option-two"
                       className="fill-accent"
                     />
-                    <Label htmlFor="option-two">Leader</Label>
+                    <Label htmlFor="option-two">{t("Leader")}</Label>
                   </div>
                 </RadioGroup>
               </FormControl>
@@ -111,7 +114,7 @@ export const SignInForm = () => {
           )}
         />
         <Button type="submit" variant="primary" className="w-full">
-          Sign In
+          {t("Sign In")}
         </Button>
         <div className="flex flex-col gap-4">
           <div className="">
@@ -136,12 +139,12 @@ export const SignInForm = () => {
             type="button"
           >
             <Chromium />
-            Log In with Google
+            {t("Log In with Google")}
           </Button>
           <p className="text-center text-sm font-light">
-            Don't have an account?
+            {t("Don't have an account?")}
             <Link to="/signup" className=" text-md font-semibold">
-              Sign Up
+              {t("Sign Up")}
             </Link>
           </p>
         </div>
