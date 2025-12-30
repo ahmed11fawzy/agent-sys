@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -17,9 +18,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { useTranslation } from "react-i18next";
+import { useLoginMutation } from "@/features/api-queries/auth-query";
+import type {
+  AuthUser,
+  AuthUserResponse,
+  LoginError,
+} from "@/types/login-type";
+import { setCredentials } from "@/features/auth-slice";
+import type { AuthorizedUser } from "@/types/authorized-user-type";
+import { useDispatch } from "react-redux";
 
 export const SignInForm = () => {
+  const [login, { isLoading: isLoggingIn }] = useLoginMutation();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   // 1. Define your form.
@@ -33,13 +45,43 @@ export const SignInForm = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof signinSchema>) {
+  async function onSubmit(values: z.infer<typeof signinSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
     console.log(values);
-    if (values) {
-      navigate("/", { replace: true, state: { user: values } });
+    try {
+      const res: AuthUserResponse | LoginError = await login(values).unwrap();
+      console.log("logging", res);
+      if (res.status) {
+        const {
+          id,
+          name,
+          avatar,
+          type,
+          is_active,
+          store_id,
+          token,
+          all_permissions,
+        } = (res as AuthUserResponse).data as AuthUser;
+        dispatch(
+          setCredentials({
+            id,
+            name,
+            avatar,
+            type,
+            is_active,
+            store_id,
+            token,
+            all_permissions,
+          } as AuthorizedUser)
+        );
+        navigate("/", { replace: true, state: { user: values } });
+      } else {
+        throw new Error((res as LoginError).message);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -134,8 +176,8 @@ export const SignInForm = () => {
             </p>
           </div>
           <Button
-            className="w-ful bg-accent hover:bg-accent/40 cursor-pointer"
-            variant="outline"
+            className="w-ful cursor-pointer"
+            variant="animatedOutline"
             type="button"
           >
             <Chromium />
