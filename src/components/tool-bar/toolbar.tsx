@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SidebarTrigger } from "../ui/sidebar";
-import { Toggle } from "../ui/toggle";
-import { Moon, Sun } from "lucide-react";
+
 import { useAppSelector } from "@/store";
 import { useDispatch } from "react-redux";
+
 import { setLanguage, setTheme, type Language } from "@/features/setting-slice";
 
 import { DropdownMenu, DropdownMenuTrigger } from "../ui/dropdown-menu";
@@ -14,15 +15,16 @@ import {
   DropdownMenuRadioItem,
 } from "@radix-ui/react-dropdown-menu";
 import { useTranslation } from "react-i18next";
+import { AnimatedThemeToggler } from "../ui/animated-theme-toggler";
 const ToolBar = () => {
   const { theme, language } = useAppSelector((state) => state.settings);
   console.log(theme);
   const { i18n, t } = useTranslation();
   const dispatch = useDispatch();
 
-  const toggleTheme = () => {
+  /* const toggleTheme = () => {
     dispatch(setTheme(theme === "dark" ? "light" : "dark"));
-  };
+  }; */
 
   const toggleLanguage = (newLanguage: Language) => {
     console.log(newLanguage);
@@ -34,16 +36,8 @@ const ToolBar = () => {
     <div className="flex justify-between align-center  py-2 mt-2 ">
       <SidebarTrigger className=" flex   h-full align-center" />
       <div className="flex gap-3 align-center">
-        <div>
-          <Toggle
-            aria-label="Toggle Theme"
-            size="sm"
-            variant="default"
-            className="data-[state=on]:bg-transparent data-[state=on]:*:[svg]:fill-dark data-[state=on]:*:[svg]:stroke-dark"
-            onClick={toggleTheme}
-          >
-            {theme === "dark" ? <Sun /> : <Moon />}
-          </Toggle>
+        <div className="cursor-pointer text-sm flex align-center">
+          <AnimatedThemeToggler />
         </div>
         <div>
           <DropdownMenu>
