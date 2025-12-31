@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SidebarTrigger } from "../ui/sidebar";
 
 import { useAppSelector } from "@/store";
@@ -16,6 +15,7 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { useTranslation } from "react-i18next";
 import { AnimatedThemeToggler } from "../ui/animated-theme-toggler";
+import UserAvatar from "../user-avatar/user-avatar";
 const ToolBar = () => {
   const { theme, language } = useAppSelector((state) => state.settings);
   console.log(theme);
@@ -74,15 +74,7 @@ const ToolBar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-
-        <div>
-          <h5 className="text-sm font-semibold">Mohamed</h5>
-          <p className="text-xs text-muted-foreground">{t("agent")}</p>
-        </div>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <UserAvatar />
       </div>
     </div>
   );
