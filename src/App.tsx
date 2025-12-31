@@ -7,6 +7,8 @@ import Signup from "./pages/Auth/signup";
 import { useEffect } from "react";
 import { useAppSelector } from "./store";
 import { useTranslation } from "react-i18next";
+import Agents from "./pages/Agents/agent";
+import NewAgent from "./pages/Agents/new-agent";
 function App() {
   const { theme, language } = useAppSelector((state) => state.settings);
   const { i18n } = useTranslation();
@@ -29,6 +31,8 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/agents" element={<Agents />} />
+          <Route path="/agents/new-agent" element={<NewAgent />} />
         </Route>
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />

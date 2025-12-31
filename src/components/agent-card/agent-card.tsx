@@ -11,8 +11,10 @@ import { Badge } from "../ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { type Agent } from "@/types/agent-types";
 import { ShinyButton } from "../ui/shiny-button";
+import { useTranslation } from "react-i18next";
 
 const AgentCard = ({ agent }: { agent: Agent }) => {
+  const { t } = useTranslation();
   return (
     <Card className="relative  overflow-hidden">
       <CardHeader className="h-24 bg-linear-to-br  from-accent to-accent/20">
@@ -31,7 +33,7 @@ const AgentCard = ({ agent }: { agent: Agent }) => {
               </p>
             </div>
           </div>
-          <Badge variant="secondary">{agent.status}</Badge>
+          <Badge variant="secondary">{t(agent.status)}</Badge>
         </div>
       </CardHeader>
       <CardContent>
@@ -86,7 +88,7 @@ const AgentCard = ({ agent }: { agent: Agent }) => {
         </div>
       </CardContent>
       <CardFooter>
-        <ShinyButton>View Details</ShinyButton>
+        <ShinyButton>{t("View Details")}</ShinyButton>
       </CardFooter>
     </Card>
   );

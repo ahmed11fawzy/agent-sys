@@ -22,6 +22,6 @@ import coreApiSlice from "../core-api-slice";
 });
 
 
-export const {useLazyGetAgentsQuery, useCreateAgentMutation} = agentQuery;
+export const {useGetAgentsQuery, useLazyGetAgentsQuery, useCreateAgentMutation} = agentQuery;
 
 

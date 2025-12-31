@@ -8,6 +8,7 @@ import React, {
 } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useVirtualizer, Virtualizer } from "@tanstack/react-virtual";
+import { useTranslation } from "react-i18next";
 
 // ============================================================================
 // TYPES
@@ -203,6 +204,7 @@ export const VirtualizedInfiniteList = memo(
       overscan,
     });
 
+    const { t } = useTranslation();
     // Intersection Observer for triggering load more
     useEffect(() => {
       const sentinel = sentinelRef.current;
@@ -227,19 +229,21 @@ export const VirtualizedInfiniteList = memo(
     const defaultLoadingIndicator = (
       <div className="flex items-center justify-center p-4">
         <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-        <span className="ml-2 text-sm text-gray-500">Loading more...</span>
+        <span className="ml-2 text-sm text-gray-500">
+          {t("Loading more...")}
+        </span>
       </div>
     );
 
     const defaultEndMessage = (
       <div className="flex items-center justify-center p-4 text-sm text-gray-500">
-        No more items to load
+        {t("No more items to load")}
       </div>
     );
 
     const defaultEmptyComponent = (
       <div className="flex flex-col items-center justify-center h-full text-gray-500 p-8">
-        <p>No items found</p>
+        <p>{t("No items found")}</p>
       </div>
     );
 
