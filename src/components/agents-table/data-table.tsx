@@ -9,6 +9,7 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
+import type { TFunction } from "i18next";
 
 import {
   Table,
@@ -19,18 +20,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+  getColumns: (t: TFunction) => ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
 export function DataTable<TData, TValue>({
-  columns,
+  getColumns,
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const { t, i18n } = useTranslation();
+
+  // Memoize columns so they update when language changes
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const columns = useMemo(() => getColumns(t), [getColumns, i18n.language]);
+
   const table = useReactTable({
     data,
     columns,
@@ -44,7 +52,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <>
+    <div dir={i18n.language === "ar" ? "rtl" : "ltr"}>
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
@@ -88,7 +96,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("No results.")}
                 </TableCell>
               </TableRow>
             )}
@@ -102,7 +110,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          {t("Previous")}
         </Button>
         <Button
           variant="outline"
@@ -110,9 +118,9 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          {t("Next")}
         </Button>
       </div>
-    </>
+    </div>
   );
 }
