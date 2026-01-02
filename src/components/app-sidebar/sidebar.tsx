@@ -1,12 +1,3 @@
-import {
-  Calendar,
-  Home,
-  Inbox,
-  LogIn,
-  LogOut,
-  Search,
-  Settings,
-} from "lucide-react";
 import { useAppSelector } from "@/store";
 import {
   Sidebar,
@@ -20,59 +11,28 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useTranslation } from "react-i18next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Separator } from "../ui/separator";
 import UserAvatar from "../user-avatar/user-avatar";
-
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "/",
-    icon: Home,
-  },
-  {
-    title: "Agents",
-    url: "/agents",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "/settings",
-    icon: Settings,
-  },
-  {
-    title: "Sign In",
-    url: "/signin",
-    icon: LogIn,
-  },
-  {
-    title: "Sign Up",
-    url: "/signup",
-    icon: LogOut,
-  },
-];
+import { AgentItems, LeaderItems } from "./sidebar-items";
+import { LogOut } from "lucide-react";
 
 export function AppSidebar() {
   const { language } = useAppSelector((state) => state.settings);
   const { i18n, t } = useTranslation();
+  const { user } = useAppSelector((state) => state.auth);
+  const [items, setItems] = useState(() =>
+    user?.type === "agent" ? AgentItems : LeaderItems
+  );
+
   // 2. Sync Language with DOM and i18n
   useEffect(() => {
     i18n.changeLanguage(language);
     document.dir = language === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = language;
   }, [language, i18n]);
+
   return (
     <Sidebar
       side={language === "ar" ? "right" : "left"}
