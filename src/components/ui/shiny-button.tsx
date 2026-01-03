@@ -1,7 +1,7 @@
-import React from "react"
-import { motion, type MotionProps } from "motion/react"
+import React from "react";
+import { motion, type MotionProps } from "motion/react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 const animationProps: MotionProps = {
   initial: { "--x": "100%", scale: 0.8 },
@@ -22,14 +22,14 @@ const animationProps: MotionProps = {
       mass: 0.5,
     },
   },
-}
+};
 
 interface ShinyButtonProps
   extends
     Omit<React.HTMLAttributes<HTMLElement>, keyof MotionProps>,
     MotionProps {
-  children: React.ReactNode
-  className?: string
+  children: React.ReactNode;
+  className?: string;
 }
 
 export const ShinyButton = React.forwardRef<
@@ -47,7 +47,7 @@ export const ShinyButton = React.forwardRef<
       {...props}
     >
       <span
-        className="relative block size-full text-sm tracking-wide text-[rgb(0,0,0,65%)] uppercase dark:font-light dark:text-[rgb(255,255,255,90%)]"
+        className="relative block size-full text-sm tracking-wide text-[rgb(0,0,0,65%)] uppercase  ]"
         style={{
           maskImage:
             "linear-gradient(-75deg,var(--primary) calc(var(--x) + 20%),transparent calc(var(--x) + 30%),var(--primary) calc(var(--x) + 100%))",
@@ -66,7 +66,7 @@ export const ShinyButton = React.forwardRef<
         className="absolute inset-0 z-10 block rounded-[inherit] p-px"
       />
     </motion.button>
-  )
-})
+  );
+});
 
-ShinyButton.displayName = "ShinyButton"
+ShinyButton.displayName = "ShinyButton";
