@@ -9,6 +9,7 @@ import { useAppSelector } from "./store";
 import { useTranslation } from "react-i18next";
 import Agents from "./pages/Agents/agent";
 import NewAgent from "./pages/Agents/new-agent";
+import Stores from "./pages/Stores/Stores";
 function App() {
   const { theme, language } = useAppSelector((state) => state.settings);
   const { i18n } = useTranslation();
@@ -33,6 +34,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/agents" element={<Agents />} />
           <Route path="/agents/new-agent" element={<NewAgent />} />
+          {/* <Route path="/stores" element={<Stores />} /> */}
+          {/*  <Route path="/stores/new-store" element={<NewStore />} />
+          <Route path="/commissions" element={<Commissions />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/settings" element={<Settings />} /> */}
         </Route>
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
