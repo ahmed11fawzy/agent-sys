@@ -23,7 +23,7 @@ export function AppSidebar() {
   const { i18n, t } = useTranslation();
   const { user } = useAppSelector((state) => state.auth);
   const [items, setItems] = useState(() =>
-    user?.type === "agent" ? AgentItems : LeaderItems
+    user?.type === "sales_agent" ? AgentItems : LeaderItems
   );
 
   // 2. Sync Language with DOM and i18n

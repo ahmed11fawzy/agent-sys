@@ -10,6 +10,9 @@ import { useTranslation } from "react-i18next";
 import Agents from "./pages/Agents/agent";
 import NewAgent from "./pages/Agents/new-agent";
 import Stores from "./pages/Stores/Stores";
+import { ProtectedRoute } from "./components/protected-route";
+import MyDashboard from "./pages/agent-dashboard/my-dashboard";
+
 function App() {
   const { theme, language } = useAppSelector((state) => state.settings);
   const { i18n } = useTranslation();
@@ -27,21 +30,40 @@ function App() {
     document.dir = language === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = language;
   }, [language, i18n]);
+
   return (
     <>
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/agents" element={<Agents />} />
-          <Route path="/agents/new-agent" element={<NewAgent />} />
-          {/* <Route path="/stores" element={<Stores />} /> */}
-          {/*  <Route path="/stores/new-store" element={<NewStore />} />
-          <Route path="/commissions" element={<Commissions />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="/settings" element={<Settings />} /> */}
-        </Route>
+        {/* Public routes */}
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
+
+        {/* Protected routes with Layout */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<Layout />}>
+            {/* Shared routes (both agent and team_manager) */}
+            <Route path="/" element={<Home />} />
+
+            {/* Team Manager only routes */}
+            <Route element={<ProtectedRoute allowedRoles={["team_manager"]} />}>
+              <Route path="/agents" element={<Agents />} />
+              <Route path="/agents/new-agent" element={<NewAgent />} />
+              {<Route path="/stores" element={<Stores />} />}
+              {/* <Route path="/commissions" element={<Commissions />} /> */}
+              {/* <Route path="/reports" element={<Reports />} /> */}
+              {/* <Route path="/settings" element={<Settings />} /> */}
+            </Route>
+
+            {/* Agent only routes */}
+            <Route element={<ProtectedRoute allowedRoles={["sales_agent"]} />}>
+              {<Route path="/my-dashboard" element={<MyDashboard />} />}
+              {/* <Route path="/daily-visits" element={<DailyVisits />} /> */}
+              {/* <Route path="/my-wallet" element={<MyWallet />} /> */}
+            </Route>
+          </Route>
+        </Route>
+
+        {/* Fallback */}
         <Route path="*" element={<Navigate to="/signin" />} />
       </Routes>
     </>
