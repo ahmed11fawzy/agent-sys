@@ -1,5 +1,6 @@
 import {
   CalendarCheck2,
+  Eye,
   Landmark,
   MapPin,
   Phone,
@@ -16,9 +17,9 @@ import { useTranslation } from "react-i18next";
 const AgentCard = ({ agent }: { agent: Agent }) => {
   const { t } = useTranslation();
   return (
-    <Card className="relative  overflow-hidden">
+    <Card className="relative  overflow-hidden w-full">
       <CardHeader className="h-24 bg-linear-to-br  from-accent to-accent/20">
-        <div className="flex items-start justify-between">
+        <div className="flex items-start justify-between ">
           <div className="flex items-center gap-2">
             <Avatar>
               <AvatarImage src={agent.user.avatar || ""} />
@@ -28,7 +29,7 @@ const AgentCard = ({ agent }: { agent: Agent }) => {
             </Avatar>
             <div>
               <h3 className="text-lg font-semibold">{agent.user.name}</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground w-32 overflow-hidden text-ellipsis whitespace-nowrap  ">
                 {agent.user.email}
               </p>
             </div>
@@ -88,7 +89,9 @@ const AgentCard = ({ agent }: { agent: Agent }) => {
         </div>
       </CardContent>
       <CardFooter>
-        <ShinyButton>{t("View Details")}</ShinyButton>
+        <ShinyButton className="bg-(--primary-50) text-(--primary-700) font-medium ">
+          <Eye size={18} />
+        </ShinyButton>
       </CardFooter>
     </Card>
   );

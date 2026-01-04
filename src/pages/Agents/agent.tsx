@@ -1,10 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import { useState, useCallback } from "react";
 import { useLazyGetAgentsQuery } from "@/features/api-queries/agent-query";
-import {
-  useInfiniteScroll,
-  VirtualizedInfiniteList,
-} from "@/hooks/virtual-infinite-scrolling";
+import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
+import { VirtualGridList } from "@/components/virtual-scroll";
 import AgentCard from "@/components/agent-card/agent-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,7 +23,6 @@ const Agents = () => {
   const [status, setStatus] = useState("");
   const [salary_type, setSalaryType] = useState("");
   const [team_id, setTeamId] = useState("");
-
   const [is_online, setIsOnline] = useState("");
 
   // API Query
@@ -45,7 +43,6 @@ const Agents = () => {
         ...(status && { status }),
         ...(salary_type && { salary_type }),
         ...(team_id && { team_id }),
-
         ...(is_online && { is_online }),
       }).toString();
 
@@ -81,9 +78,7 @@ const Agents = () => {
 
   // Render Item for Virtualized List
   const renderAgent = useCallback(
-    (agent: Agent, index: number, virtualRow: any) => (
-      <AgentCard agent={agent} />
-    ),
+    (agent: Agent, index: number) => <AgentCard agent={agent} />,
     []
   );
 
@@ -128,27 +123,29 @@ const Agents = () => {
         </div>
       )}
 
-      {/* Virtualized List */}
+      {/* Virtualized Grid List */}
       <div className="h-[600px] w-full border rounded-md shadow-sm bg-background">
         {isLoading && agents.length === 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
             <AgentSkeleton />
             <AgentSkeleton />
             <AgentSkeleton />
             <AgentSkeleton />
           </div>
         ) : (
-          <VirtualizedInfiniteList<Agent>
+          <VirtualGridList<Agent>
             items={agents}
             renderItem={renderAgent}
             onEndReached={loadMore}
             isFetchingMore={isFetchingMore}
             hasMore={hasMore}
-            estimateSize={220} // Approximate height of AgentCard including padding
+            estimateSize={220}
             itemKey={(agent) => agent.id}
             height="100%"
             width="100%"
-            className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+            className="p-2"
+            columns={{ default: 1, sm: 2, md: 3, lg: 4 }}
+            gap={16}
             endMessage={
               <div className="flex flex-col items-center justify-center p-4 text-muted-foreground">
                 <p>{t("You have reached the end of the list.")}</p>
