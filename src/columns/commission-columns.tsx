@@ -25,7 +25,7 @@ export const getColumns = (t: TFunction): ColumnDef<Agent>[] => [
               {(row.getValue("user") as AgentUser).name}
             </div>
             <div className="text-sm text-muted-foreground">
-              {(row.getValue("user") as AgentUser).email}
+              {row.original.agent_code}
             </div>
           </div>
         </div>
@@ -34,12 +34,8 @@ export const getColumns = (t: TFunction): ColumnDef<Agent>[] => [
   },
 
   {
-    accessorKey: "agent_code",
-    header: t("Agent Code"),
-  },
-  {
-    accessorKey: "salary_type",
-    header: t("Salary Type"),
+    accessorKey: "base_salary",
+    header: t("Base Salary"),
   },
   {
     accessorKey: "commission_rate",

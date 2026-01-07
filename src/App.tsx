@@ -12,6 +12,9 @@ import NewAgent from "./pages/Agents/new-agent";
 import Stores from "./pages/Stores/Stores";
 import { ProtectedRoute } from "./components/protected-route";
 import MyDashboard from "./pages/agent-dashboard/my-dashboard";
+import Commissions from "./pages/commissions/commissions";
+import NewStore from "./pages/new-store/new-store";
+import AgentDetails from "./pages/agent-details/agent-details";
 
 function App() {
   const { theme, language } = useAppSelector((state) => state.settings);
@@ -47,9 +50,10 @@ function App() {
             {/* Team Manager only routes */}
             <Route element={<ProtectedRoute allowedRoles={["team_manager"]} />}>
               <Route path="/agents" element={<Agents />} />
+              <Route path="/agent/:id" element={<AgentDetails />} />
               <Route path="/agents/new-agent" element={<NewAgent />} />
               {<Route path="/stores" element={<Stores />} />}
-              {/* <Route path="/commissions" element={<Commissions />} /> */}
+              {<Route path="/commissions" element={<Commissions />} />}
               {/* <Route path="/reports" element={<Reports />} /> */}
               {/* <Route path="/settings" element={<Settings />} /> */}
             </Route>
@@ -57,6 +61,8 @@ function App() {
             {/* Agent only routes */}
             <Route element={<ProtectedRoute allowedRoles={["sales_agent"]} />}>
               {<Route path="/my-dashboard" element={<MyDashboard />} />}
+              {<Route path="/my-stores" element={<Stores />} />}
+              {<Route path="/my-stores/new-store" element={<NewStore />} />}
               {/* <Route path="/daily-visits" element={<DailyVisits />} /> */}
               {/* <Route path="/my-wallet" element={<MyWallet />} /> */}
             </Route>

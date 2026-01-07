@@ -2,11 +2,9 @@
 import AgentSkeleton from "@/components/agent-card/agent-skeleton";
 import Header from "@/components/page-header/Header";
 import StoreCard from "@/components/store-card/store-card";
+import { VirtualGridList } from "@/components/virtual-scroll";
 import { useLazyGetStoresQuery } from "@/features/api-queries/stores-query";
-import {
-  useInfiniteScroll,
-  VirtualizedInfiniteList,
-} from "@/hooks/virtual-infinite-scrolling";
+import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import type { AgentStore } from "@/types/store-type";
 import { Store } from "lucide-react";
 import React, { useCallback, useState } from "react";
@@ -32,18 +30,13 @@ const Stores = () => {
         ...(storeName && { storeName }),
       }).toString();
 
-      try {
-        const res = await getStores(filterQuery).unwrap();
-        if (res.status) {
-          return {
-            data: res.data,
-            hasMore: res.meta.current_page < res.meta.last_page,
-            total: res.meta.total,
-          };
-        } else throw new Error("failed to get agents ");
-      } catch (error) {
-        console.error(error);
-      }
+      const res = await getStores(filterQuery).unwrap();
+
+      return {
+        data: res.data,
+        hasMore: res.meta.current_page < res.meta.last_page,
+        total: res.meta.total,
+      };
     },
     [status, agentCode, storeName, getStores]
   );
@@ -93,7 +86,7 @@ const Stores = () => {
               <AgentSkeleton />
             </div>
           ) : (
-            <VirtualizedInfiniteList<AgentStore>
+            <VirtualGridList<AgentStore>
               items={stores}
               renderItem={renderAgent}
               onEndReached={loadMore}

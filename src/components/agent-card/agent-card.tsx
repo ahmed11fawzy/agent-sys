@@ -13,9 +13,17 @@ import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { type Agent } from "@/types/agent-types";
 import { ShinyButton } from "../ui/shiny-button";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { encodeToFakeUuid } from "@/lib/uuid-obfuscator";
 
 const AgentCard = ({ agent }: { agent: Agent }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const showDetailsHandler = (id: number) => {
+    console.log("ID : ", id);
+    const hashId = encodeToFakeUuid(id);
+    navigate(`/agent/${hashId}`);
+  };
   return (
     <Card className="relative  overflow-hidden w-full">
       <CardHeader className="h-24 bg-linear-to-br  from-accent to-accent/20">
@@ -89,7 +97,10 @@ const AgentCard = ({ agent }: { agent: Agent }) => {
         </div>
       </CardContent>
       <CardFooter>
-        <ShinyButton className="bg-(--primary-50) text-(--primary-700) font-medium ">
+        <ShinyButton
+          onClick={() => showDetailsHandler(agent.id)}
+          className="bg-(--primary-50) text-(--primary-700) font-medium "
+        >
           <Eye size={18} />
         </ShinyButton>
       </CardFooter>

@@ -120,7 +120,7 @@ export const VirtualGridList = memo(
 
     const defaultEmptyComponent = (
       <div className="flex flex-col items-center justify-center h-full text-gray-500 p-8">
-        <p>{t("No items found")}</p>
+        <p className="">{t("No items found")}</p>
       </div>
     );
 

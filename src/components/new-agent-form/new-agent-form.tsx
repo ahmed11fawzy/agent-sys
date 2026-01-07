@@ -24,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useTranslation } from "react-i18next";
 
 const steps = [
   { id: 1, title: "User Information" },
@@ -33,6 +34,7 @@ const steps = [
 const NewAgentForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [createAgent, { isLoading }] = useCreateAgentMutation();
+  const { t } = useTranslation();
 
   const form = useForm<CreateAgentSchema>({
     resolver: zodResolver(createAgentSchema),
@@ -301,7 +303,7 @@ const NewAgentForm = () => {
           {currentStep === 2 && (
             <Card className="animate-in fade-in-50 duration-300">
               <CardHeader>
-                <CardTitle>Agent Details</CardTitle>
+                <CardTitle>{t("Agent Details")}</CardTitle>
                 <CardDescription>
                   Enter the specific details for the agent profile.
                 </CardDescription>
@@ -353,9 +355,9 @@ const NewAgentForm = () => {
                     className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     {...form.register("salary_type")}
                   >
-                    <option value="fixed">Fixed</option>
-                    <option value="commission">Commission</option>
-                    <option value="mixed">Mixed</option>
+                    <option value="fixed">{t("Fixed")}</option>
+                    <option value="commission">{t("Commission")}</option>
+                    <option value="mixed">{t("Mixed")}</option>
                   </select>
                   <FieldError
                     errors={[
@@ -365,7 +367,9 @@ const NewAgentForm = () => {
                 </Field>
 
                 <Field>
-                  <FieldLabel htmlFor="base_salary">Base Salary</FieldLabel>
+                  <FieldLabel htmlFor="base_salary">
+                    {t("Base Salary")}
+                  </FieldLabel>
                   <Input
                     id="base_salary"
                     type="number"
@@ -381,7 +385,7 @@ const NewAgentForm = () => {
 
                 <Field>
                   <FieldLabel htmlFor="commission_rate">
-                    Commission Rate (%)
+                    {t("Commission Rate")} (%)
                   </FieldLabel>
                   <Input
                     id="commission_rate"
@@ -399,7 +403,7 @@ const NewAgentForm = () => {
                 </Field>
 
                 <Field>
-                  <FieldLabel htmlFor="hire_date">Hire Date</FieldLabel>
+                  <FieldLabel htmlFor="hire_date">{t("Hire Date")}</FieldLabel>
                   <Input
                     id="hire_date"
                     type="date"
@@ -414,7 +418,9 @@ const NewAgentForm = () => {
 
                 <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
                   <Field>
-                    <FieldLabel htmlFor="daily_target">Daily Target</FieldLabel>
+                    <FieldLabel htmlFor="daily_target">
+                      {t("Daily Target")}
+                    </FieldLabel>
                     <Input
                       id="daily_target"
                       type="number"
@@ -431,7 +437,7 @@ const NewAgentForm = () => {
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="weekly_target">
-                      Weekly Target
+                      {t("Weekly Target")}
                     </FieldLabel>
                     <Input
                       id="weekly_target"
@@ -449,7 +455,7 @@ const NewAgentForm = () => {
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="monthly_target">
-                      Monthly Target
+                      {t("Monthly Target")}
                     </FieldLabel>
                     <Input
                       id="monthly_target"
@@ -469,11 +475,11 @@ const NewAgentForm = () => {
                 </div>
 
                 <Field className="md:col-span-2">
-                  <FieldLabel htmlFor="notes">Notes</FieldLabel>
+                  <FieldLabel htmlFor="notes">{t("Notes")}</FieldLabel>
                   <Input
                     id="notes"
                     {...form.register("notes")}
-                    placeholder="Additional notes..."
+                    placeholder={t("Additional notes...")}
                   />
                   <FieldError
                     errors={[{ message: form.formState.errors.notes?.message }]}
@@ -493,7 +499,7 @@ const NewAgentForm = () => {
                 className="gap-2"
               >
                 <ChevronLeft className="w-4 h-4" />
-                Back
+                {t("Back")}
               </Button>
             ) : (
               <div />
@@ -506,7 +512,7 @@ const NewAgentForm = () => {
                 className="gap-2"
                 variant="primary"
               >
-                Next
+                {t("Next")}
                 <ChevronRight className="w-4 h-4" />
               </Button>
             ) : (
@@ -516,7 +522,7 @@ const NewAgentForm = () => {
                 variant="primary"
                 className="gap-2"
               >
-                {isLoading ? "Creating..." : "Create Agent"}
+                {isLoading ? t("Creating...") : t("Create Agent")}
                 <Check className="w-4 h-4" />
               </Button>
             )}

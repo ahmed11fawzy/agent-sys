@@ -37,7 +37,7 @@ export const LeaderItems: SidebarItem[] = [
     allowedRoles: ["team_manager"],
   },
   {
-    title: "Commissions and Salary",
+    title: "Commissions",
     url: "/commissions",
     icon: Banknote,
     allowedRoles: ["team_manager"],
