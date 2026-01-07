@@ -140,7 +140,64 @@ const StoreForm = () => {
   const onSubmit = async (data: StoreFormValues) => {
     try {
       console.log("storedata", data);
-      const res = await createStore(data).unwrap();
+
+      const formData = new FormData();
+
+      // User Data
+      formData.append("user[name]", data.user.name);
+      formData.append("user[email]", data.user.email);
+      formData.append("user[password]", data.user.password);
+      formData.append(
+        "user[password_confirmation]",
+        data.user.password_confirmation
+      );
+      if (data.user.phone) formData.append("user[phone]", data.user.phone);
+      if (data.user.type) formData.append("user[type]", data.user.type);
+
+      // Store Data
+      formData.append("store[name_ar]", data.store.name_ar);
+      formData.append("store[name_en]", data.store.name_en);
+      formData.append(
+        "store[business_activitie_id]",
+        data.store.business_activitie_id
+      );
+      formData.append("store[market_id]", data.store.market_id);
+      formData.append("store[email]", data.store.email);
+      formData.append("store[phone]", data.store.phone);
+      formData.append("store[location]", data.store.location);
+      formData.append("store[street]", data.store.street);
+      formData.append("store[zip_code]", data.store.zip_code);
+      if (data.store.subcode)
+        formData.append("store[subcode]", data.store.subcode);
+      if (data.store.mailbox)
+        formData.append("store[mailbox]", data.store.mailbox);
+      if (data.store.location_id)
+        formData.append("store[location_id]", data.store.location_id);
+      if (data.store.store_image)
+        formData.append("store[store_image]", data.store.store_image);
+      if (data.store.store_logo)
+        formData.append("store[store_logo]", data.store.store_logo);
+
+      // Business Data
+      formData.append("business[business_name]", data.business.business_name);
+      formData.append(
+        "business[commercial_registration_number]",
+        data.business.commercial_registration_number
+      );
+      formData.append("business[unified_number]", data.business.unified_number);
+      formData.append("business[cr_expiry_date]", data.business.cr_expiry_date);
+      formData.append("business[owner_phone]", data.business.owner_phone);
+      if (data.business.municipal_license_number)
+        formData.append(
+          "business[municipal_license_number]",
+          data.business.municipal_license_number
+        );
+      if (data.business.tax_number)
+        formData.append("business[tax_number]", data.business.tax_number);
+      if (data.business.cr_file_url)
+        formData.append("business[cr_file_url]", data.business.cr_file_url);
+
+      const res = await createStore(formData).unwrap();
       console.log("store res ", res);
       // Handle success (e.g., toast, redirect)
       console.log("Store created successfully", data);
@@ -215,7 +272,11 @@ const StoreForm = () => {
             {t("Next")}
           </Button>
         ) : (
-          <Button onClick={handleSubmit(onSubmit)} disabled={isLoading}>
+          <Button
+            className="bg-primary"
+            onClick={handleSubmit(onSubmit)}
+            disabled={isLoading}
+          >
             {isLoading ? t("Submitting...") : t("Submit")}
           </Button>
         )}

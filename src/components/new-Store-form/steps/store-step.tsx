@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "react-i18next";
+import { MarketSelect } from "../market-select";
 
 const StoreStep = () => {
   const { control } = useFormContext();
@@ -44,6 +45,42 @@ const StoreStep = () => {
           </FormItem>
         )}
       />
+
+      <FormField
+        control={control}
+        name="store.store_image"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t("Store Image")}</FormLabel>
+            <FormControl>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={(e) => field.onChange(e.target.files?.[0])}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={control}
+        name="store.store_logo"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t("Store Logo")}</FormLabel>
+            <FormControl>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={(e) => field.onChange(e.target.files?.[0])}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
       <FormField
         control={control}
         name="store.business_activitie_id"
@@ -68,11 +105,7 @@ const StoreStep = () => {
           <FormItem>
             <FormLabel>{t("Market ID")}</FormLabel>
             <FormControl>
-              <Input
-                type="number"
-                placeholder={t("Enter Market ID")}
-                {...field}
-              />
+              <MarketSelect value={field.value} onChange={field.onChange} />
             </FormControl>
             <FormMessage />
           </FormItem>

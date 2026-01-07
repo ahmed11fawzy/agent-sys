@@ -14,19 +14,39 @@ export const userSchema = z
     path: ["password_confirmation"],
   });
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+const ACCEPTED_FILE_TYPES = [...ACCEPTED_IMAGE_TYPES, "application/pdf"];
+
 export const storeSchema = z.object({
   name_ar: z.string().min(1, "Arabic Name is required"),
   name_en: z.string().min(1, "English Name is required"),
   business_activitie_id: z.string().min(1, "Business Activity is required"),
   market_id: z.string().min(1, "Market is required"),
-  email: z.string().email("Invalid store email"), // Changed from store_email
-  phone: z.string().min(1, "Store Phone is required"), // Changed from store_phone
+  email: z.string().email("Invalid store email"),
+  phone: z.string().min(1, "Store Phone is required"),
   location: z.string().min(1, "Location is required"),
   street: z.string().min(1, "Street is required"),
   zip_code: z.string().min(1, "Zip Code is required"),
   subcode: z.string().optional(),
   mailbox: z.string().optional(),
-  location_id: z.string().optional(),
+  location_id: z.string().min(1, "Location ID is required"),
+  store_image: z
+    .any()
+    .refine((file) => file, "Store image is required")
+    .refine((file) => file?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+    .refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
+      "Only .jpg, .jpeg, .png and .webp formats are supported."
+    ),
+  store_logo: z
+    .any()
+    .refine((file) => file, "Store logo is required")
+    .refine((file) => file?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+    .refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
+      "Only .jpg, .jpeg, .png and .webp formats are supported."
+    ),
 });
 
 export const businessSchema = z.object({
@@ -37,6 +57,14 @@ export const businessSchema = z.object({
   owner_phone: z.string().min(1, "Owner Phone is required"),
   municipal_license_number: z.string().optional(),
   tax_number: z.string().optional(),
+  cr_file_url: z
+    .any()
+    .refine((file) => file, "CR File is required")
+    .refine((file) => file?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+    .refine(
+      (file) => ACCEPTED_FILE_TYPES.includes(file?.type),
+      "Only .jpg, .jpeg, .png, .webp and .pdf formats are supported."
+    ),
 });
 
 export const storeFormSchema = z.object({

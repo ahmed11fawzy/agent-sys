@@ -41,6 +41,24 @@ const BusinessStep = () => {
           </FormItem>
         )}
       />
+
+      <FormField
+        control={control}
+        name="business.cr_file_url"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t("CR File")}</FormLabel>
+            <FormControl>
+              <Input
+                type="file"
+                accept=".pdf, image/*"
+                onChange={(e) => field.onChange(e.target.files?.[0])}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
       <FormField
         control={control}
         name="business.unified_number"

@@ -15,6 +15,7 @@ import MyDashboard from "./pages/agent-dashboard/my-dashboard";
 import Commissions from "./pages/commissions/commissions";
 import NewStore from "./pages/new-store/new-store";
 import AgentDetails from "./pages/agent-details/agent-details";
+import MyStores from "./pages/agent-stores/my-stores";
 
 function App() {
   const { theme, language } = useAppSelector((state) => state.settings);
@@ -61,7 +62,7 @@ function App() {
             {/* Agent only routes */}
             <Route element={<ProtectedRoute allowedRoles={["sales_agent"]} />}>
               {<Route path="/my-dashboard" element={<MyDashboard />} />}
-              {<Route path="/my-stores" element={<Stores />} />}
+              {<Route path="/my-stores" element={<MyStores />} />}
               {<Route path="/my-stores/new-store" element={<NewStore />} />}
               {/* <Route path="/daily-visits" element={<DailyVisits />} /> */}
               {/* <Route path="/my-wallet" element={<MyWallet />} /> */}

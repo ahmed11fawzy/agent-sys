@@ -71,7 +71,7 @@ export const AgentItems: SidebarItem[] = [
   },
   {
     title: "My Stores",
-    url: "/stores",
+    url: "/my-stores",
     icon: Store,
     allowedRoles: ["sales_agent"],
   },

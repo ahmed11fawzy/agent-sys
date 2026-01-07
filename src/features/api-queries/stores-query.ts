@@ -17,7 +17,14 @@ const storesQuery = coreApiSlice.injectEndpoints({
             }),
             invalidatesTags: ['Stores'],
         }),
+        getAgentStores: builder.query({
+            query: (query) => ({
+                url: `/sales/agents/stores?${query}`,
+                method: 'GET',
+            }),
+            providesTags: ['AgentStores'],
+        }),
     }),
 });
 
-export const { useGetStoresQuery, useLazyGetStoresQuery ,useCreateStoreMutation } = storesQuery;
+export const { useGetStoresQuery, useLazyGetStoresQuery ,useCreateStoreMutation ,useGetAgentStoresQuery ,useLazyGetAgentStoresQuery } = storesQuery;

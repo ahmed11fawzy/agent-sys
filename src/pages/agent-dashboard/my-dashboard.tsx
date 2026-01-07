@@ -7,7 +7,7 @@ import AgentSkeleton from "@/components/agent-card/agent-skeleton";
 import { VirtualGridList } from "@/components/virtual-scroll";
 import type { AgentStore } from "@/types/store-type";
 import { useCallback, useState } from "react";
-import { useLazyGetStoresQuery } from "@/features/api-queries/stores-query";
+import { useLazyGetAgentStoresQuery } from "@/features/api-queries/stores-query";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import StoreCard from "@/components/store-card/store-card";
 import { useTranslation } from "react-i18next";
@@ -20,7 +20,7 @@ const MyDashboard = () => {
   const [status, setStatus] = useState("");
   const [storeName, setStoreName] = useState("");
 
-  const [getStores] = useLazyGetStoresQuery();
+  const [getAgentStores] = useLazyGetAgentStoresQuery();
 
   const fetchStores = useCallback(
     async (page: number, pageSize: number, signal: AbortSignal) => {
@@ -33,19 +33,18 @@ const MyDashboard = () => {
       }).toString();
 
       try {
-        const res = await getStores(filterQuery).unwrap();
-        if (res.status) {
-          return {
-            data: res.data,
-            hasMore: res.meta.current_page < res.meta.last_page,
-            total: res.meta.total,
-          };
-        } else throw new Error("failed to get agents ");
+        const res = await getAgentStores(filterQuery).unwrap();
+
+        return {
+          data: res.data,
+          hasMore: res.meta.current_page < res.meta.last_page,
+          total: res.meta.total,
+        };
       } catch (error) {
         console.error(error);
       }
     },
-    [status, agentCode, storeName, getStores]
+    [status, agentCode, storeName, getAgentStores]
   );
 
   // Initialize Infinite Scroll Hook
@@ -90,7 +89,7 @@ const MyDashboard = () => {
             )}
 
             {/* Virtualized Grid List */}
-            <div className="h-[600px] w-full border rounded-md shadow-sm bg-background">
+            <div className="h-[600px] w-full  ">
               {isLoading && agents.length === 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
                   <AgentSkeleton />
