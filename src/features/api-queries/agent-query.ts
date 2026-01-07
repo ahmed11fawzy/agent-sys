@@ -18,10 +18,17 @@ import coreApiSlice from "../core-api-slice";
             }),
             invalidatesTags: ['Agents'],
         }),
+        getAgentById: builder.query({
+            query: (id) => ({
+                url: `/agents/${id}`,
+                method: 'GET',
+            }),
+            providesTags: ['Agents'],
+        }),
     }),
 });
 
 
-export const {useGetAgentsQuery, useLazyGetAgentsQuery, useCreateAgentMutation} = agentQuery;
+export const {useGetAgentsQuery, useLazyGetAgentsQuery, useCreateAgentMutation,useGetAgentByIdQuery} = agentQuery;
 
 
