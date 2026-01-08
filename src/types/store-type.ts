@@ -9,27 +9,10 @@ export type AgentStoresResponse = {
 export type AgentStore = {
   id: number;
   name: string;
-  user: {
-    id: number;
-    name: string;
-  };
-  agent: {
-    id: number;
-    name: string;
-    code: string;
-  };
-  team: {
-    id: number;
-    name: string;
-  };
-  business: {
-    id: number;
-    business_name: string;
-    commercial_registration_number: string;
-    cr_file_url: string;
-    cr_expiry_date: string; // YYYY-MM-DD
-    status: "active" | "inactive" | "suspended";
-  };
+  agent: Agent;
+  user: User;
+  team: Team;
+  business: Business;
 };
 
 export type PaginationLinks = {
@@ -47,4 +30,39 @@ export type PaginationMeta = {
   per_page: number;
   to: number;
   total: number;
+};
+
+
+
+/* ===================== AGENT ===================== */
+
+export type Agent = {
+  id: number;
+  name: string;
+  code: string;
+};
+
+/* ===================== USER ===================== */
+
+export type User = {
+  id: number;
+  name: string;
+};
+
+/* ===================== TEAM ===================== */
+
+export type Team = {
+  id: number;
+  name: string;
+};
+
+/* ===================== BUSINESS ===================== */
+
+export type Business = {
+  id: number;
+  business_name: string;
+  commercial_registration_number: string;
+  cr_expiry_date: string; // YYYY-MM-DD HH:mm:ss
+  cr_file_url: string;
+  status: "pending" | "approved" | "rejected" | string;
 };

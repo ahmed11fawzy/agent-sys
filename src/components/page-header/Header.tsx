@@ -14,7 +14,7 @@ const Header = ({
   return (
     <header className="mb-6">
       <h3 className="text-3xl font-semibold"> {t(title)} </h3>
-      <p className="text-sm text-muted-foreground ps-2">{t(subTitle)}</p>
+      <p className="text-sm text-muted-foreground mt-0.5">{t(subTitle)}</p>
     </header>
   );
 };

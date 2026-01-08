@@ -9,7 +9,7 @@ import {
   useLazyGetAgentStoresQuery,
 } from "@/features/api-queries/stores-query";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
-import type { AgentStore } from "@/types/store-type";
+import type { AgentStore, StorePayload } from "@/types/store-type";
 import {
   Activity,
   AlertTriangle,
@@ -54,7 +54,7 @@ const MyStores = () => {
       }).toString();
 
       const res = await getAgentStores(filterQuery).unwrap();
-
+      console.log("agent stores :", res);
       return {
         data: res.data,
         hasMore: res.meta.current_page < res.meta.last_page,
@@ -155,40 +155,42 @@ const MyStores = () => {
           />
         </div>
 
-        {/* Error Handling */}
-        {scrollError && (
-          <div className="text-red-500 mb-4">
-            {t("Error")}: {t(scrollError)}
-          </div>
-        )}
-        {/* Virtualized List */}
-        <div className="h-[600px] w-full border rounded-md shadow-sm bg-background">
-          {isLoading && stores.length === 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <AgentSkeleton />
-              <AgentSkeleton />
-              <AgentSkeleton />
-              <AgentSkeleton />
+        <div>
+          {/* Error Handling */}
+          {scrollError && (
+            <div className="text-red-500 mb-4">
+              {t("Error")}: {t(scrollError)}
             </div>
-          ) : (
-            <VirtualGridList<AgentStore>
-              items={stores}
-              renderItem={renderStore}
-              onEndReached={loadMore}
-              isFetchingMore={isFetchingMore}
-              hasMore={hasMore}
-              estimateSize={220} // Approximate height of StoreCard including padding
-              itemKey={(store: AgentStore) => store?.id}
-              height="100%"
-              width="100%"
-              className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-              endMessage={
-                <div className="flex flex-col items-center justify-center p-4 text-muted-foreground">
-                  <p>{t("You have reached the end of the list.")}</p>
-                </div>
-              }
-            />
           )}
+          {/* Virtualized List */}
+          <div className="h-[600px] w-full border rounded-md shadow-sm bg-background">
+            {isLoading && stores.length === 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <AgentSkeleton />
+                <AgentSkeleton />
+                <AgentSkeleton />
+                <AgentSkeleton />
+              </div>
+            ) : (
+              <VirtualGridList<AgentStore>
+                items={stores}
+                renderItem={renderStore}
+                onEndReached={loadMore}
+                isFetchingMore={isFetchingMore}
+                hasMore={hasMore}
+                estimateSize={220} // Approximate height of StoreCard including padding
+                itemKey={(store: AgentStore) => store?.id}
+                height="100%"
+                width="100%"
+                className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+                endMessage={
+                  <div className="flex flex-col items-center justify-center p-4 text-muted-foreground">
+                    <p>{t("You have reached the end of the list.")}</p>
+                  </div>
+                }
+              />
+            )}
+          </div>
         </div>
       </section>
     </main>
