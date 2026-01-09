@@ -24,6 +24,14 @@ export const activitiesQuery = coreApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Activities"],
     }),
+    createActivity: builder.mutation({
+      query: (body) => ({
+        url: "/sales/agents/activities",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Activities"],
+    }),
   }),
 });
 
@@ -32,4 +40,5 @@ export const {
   useLazyGetAllActivitiesQuery,
   useGetActivityQuery,
   useDeleteActivityMutation,
+  useCreateActivityMutation,
 } = activitiesQuery;
