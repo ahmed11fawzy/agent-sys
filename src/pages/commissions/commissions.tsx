@@ -16,21 +16,29 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "@/components/table/data-table";
 import { getColumns } from "@/columns/commission-columns";
 import { useGetAgentsQuery } from "@/features/api-queries/agent-query";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Commissions = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { data: agents } = useGetAgentsQuery(
     new URLSearchParams({ page: "1" }).toString()
   );
+
+  const createNewCommissionHandler = () => {
+    navigate("/commissions/new-commission");
+  };
+
   return (
     <main className="mt-5">
-      <div className="flex items-center justify-between">
+      <header className="flex items-center justify-between">
         <Header
           title="Commissions"
           subTitle="Follow team commissions and salary . "
           icon={<Banknote />}
         />
-        <div>
+        <div className="flex items-center gap-5">
           <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder={t("Select Month")} />
@@ -46,8 +54,15 @@ const Commissions = () => {
               </SelectGroup>
             </SelectContent>
           </Select>
+          <Button
+            variant="primary"
+            className="py-5 px-6 bg-gradient-to-r from-(--primary-700) via-(--primary-600) to-(--primary-400) "
+            onClick={createNewCommissionHandler}
+          >
+            {t("Create Commission")}
+          </Button>
         </div>
-      </div>
+      </header>
       <section className="flex flex-col gap-5">
         <CommissionsStats />
         <Card>
