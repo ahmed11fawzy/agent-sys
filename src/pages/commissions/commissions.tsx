@@ -14,15 +14,15 @@ import { months } from "./months";
 import CommissionsStats from "./commissions-stats";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "@/components/table/data-table";
-import { getColumns } from "@/columns/commission-columns";
-import { useGetAgentsQuery } from "@/features/api-queries/agent-query";
+import { getCommissionColumns } from "@/columns/commission-settings-columns";
+import { useGetCommissionSettingsQuery } from "@/features/api-queries/commission-query";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
 const Commissions = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { data: agents } = useGetAgentsQuery(
+  const { data: commissionSettings } = useGetCommissionSettingsQuery(
     new URLSearchParams({ page: "1" }).toString()
   );
 
@@ -70,7 +70,10 @@ const Commissions = () => {
             <CardTitle>{t("Commissions and Salary List")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <DataTable getColumns={getColumns} data={agents?.data || []} />
+            <DataTable
+              getColumns={getCommissionColumns}
+              data={commissionSettings?.data || []}
+            />
           </CardContent>
         </Card>
       </section>
