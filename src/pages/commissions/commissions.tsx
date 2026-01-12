@@ -15,7 +15,10 @@ import CommissionsStats from "./commissions-stats";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "@/components/table/data-table";
 import { getCommissionColumns } from "@/columns/commission-settings-columns";
-import { useGetCommissionSettingsQuery } from "@/features/api-queries/commission-query";
+import {
+  useGetAllCommissionsQuery,
+  useGetCommissionSettingsQuery,
+} from "@/features/api-queries/commission-query";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
@@ -25,11 +28,12 @@ const Commissions = () => {
   const { data: commissionSettings } = useGetCommissionSettingsQuery(
     new URLSearchParams({ page: "1" }).toString()
   );
-
+  const { data: commissions } = useGetAllCommissionsQuery();
   const createNewCommissionHandler = () => {
     navigate("/commissions/new-commission");
   };
 
+  console.log("commissions", commissions);
   return (
     <main className="mt-5">
       <header className="flex items-center justify-between">

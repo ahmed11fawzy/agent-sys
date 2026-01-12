@@ -76,8 +76,8 @@ export const AgentItems: SidebarItem[] = [
     allowedRoles: ["sales_agent"],
   },
   {
-    title: "My Wallet",
-    url: "/my-wallet",
+    title: "My Commissions",
+    url: "/my-commission",
     icon: Banknote,
     allowedRoles: ["sales_agent"],
   },

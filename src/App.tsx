@@ -19,6 +19,8 @@ import MyStores from "./pages/agent-stores/my-stores";
 import Activities from "./pages/my-activities/activities";
 import NewActivity from "./pages/new-activity/new-activity";
 import NewCommission from "./pages/new-commission/new-commission";
+import AgentCommissions from "./pages/agent-commissions/agent-commissions";
+import NewCommissionCalculations from "./pages/new-calculations/new-commission-calculations";
 
 function App() {
   const { theme, language } = useAppSelector((state) => state.settings);
@@ -75,7 +77,11 @@ function App() {
               {<Route path="/my-stores/new-store" element={<NewStore />} />}
               {<Route path="/daily-visits" element={<Activities />} />}
               {<Route path="/add-activity" element={<NewActivity />} />}
-              {/* <Route path="/my-wallet" element={<MyWallet />} /> */}
+              <Route path="/my-commission" element={<AgentCommissions />} />
+              <Route
+                path="/agent-commissions/create"
+                element={<NewCommissionCalculations />}
+              />
             </Route>
           </Route>
         </Route>

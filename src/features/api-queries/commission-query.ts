@@ -10,6 +10,14 @@ export const commissionQuery = coreApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Agents"], // Invalidating Agents too as it might update agent details
     }),
+    createAgentCommission: builder.mutation({
+      query: (body) => ({
+        url: `/sales/agents/commissions`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Commission"],
+    }),
     getCommissionSettings: builder.query({
       query: (query) => ({
         url: `/sales/agents/commission-settings?${query}`,
@@ -17,8 +25,15 @@ export const commissionQuery = coreApiSlice.injectEndpoints({
       }),
       providesTags: ["Commission"],
     }),
+    getAllCommissions: builder.query({
+      query: () => ({
+        url: `/sales/agents/commissions`,
+        method: "GET",
+      }),
+      providesTags: ["Commission"],
+    }),
   }),
 });
 
-export const { useCreateCommissionMutation, useGetCommissionSettingsQuery } =
+export const { useCreateCommissionMutation, useGetCommissionSettingsQuery, useGetAllCommissionsQuery, useCreateAgentCommissionMutation } =
   commissionQuery;
