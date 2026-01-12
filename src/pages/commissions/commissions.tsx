@@ -38,8 +38,8 @@ const Commissions = () => {
     <main className="mt-5">
       <header className="flex items-center justify-between">
         <Header
-          title="Commissions"
-          subTitle="Follow team commissions and salary . "
+          title={t("Commissions")}
+          subTitle={t("Follow team commissions and salary . ")}
           icon={<Banknote />}
         />
         <div className="flex items-center gap-5">
@@ -49,7 +49,7 @@ const Commissions = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Months</SelectLabel>
+                <SelectLabel>{t("Months")}</SelectLabel>
                 {months.map((month, index) => (
                   <SelectItem key={month} value={index.toString()}>
                     {month}

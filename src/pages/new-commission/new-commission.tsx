@@ -31,8 +31,10 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import type { Agent } from "../../types/agent-types";
+import { useTranslation } from "react-i18next";
 
 const NewCommission = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: agentsData, isLoading: isLoadingAgents } = useGetAgentsQuery(
     new URLSearchParams({ page: "1", per_page: "100" }).toString()
@@ -43,7 +45,7 @@ const NewCommission = () => {
 
   const form = useForm<CommissionFormValuesFlat>({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(CommissionFormSchema) as any,
+    resolver: zodResolver(CommissionFormSchema(t)) as any,
     defaultValues: {
       salary_type: "fixed_only",
     },
@@ -62,10 +64,10 @@ const NewCommission = () => {
   const onSubmit: SubmitHandler<CommissionFormValuesFlat> = async (values) => {
     try {
       await createCommission(values as CommissionFormValues).unwrap();
-      toast.success("Commission settings created successfully");
+      toast.success(t("Commission settings created successfully"));
       navigate("/commissions");
     } catch (error) {
-      toast.error("Failed to create commission settings");
+      toast.error(t("Failed to create commission settings"));
       console.error(error);
     }
   };
@@ -75,8 +77,8 @@ const NewCommission = () => {
   return (
     <main className="mt-5 space-y-5">
       <Header
-        title="New Commission"
-        subTitle="Add new commission"
+        title={t("New Commission")}
+        subTitle={t("Add new commission")}
         icon={<Banknote />}
       />
 
@@ -91,14 +93,14 @@ const NewCommission = () => {
                   name="agent_id"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Agent</FormLabel>
+                      <FormLabel>{t("Agent")}</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select Agent" />
+                            <SelectValue placeholder={t("Select Agent")} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -129,23 +131,25 @@ const NewCommission = () => {
                   name="salary_type"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Salary Type</FormLabel>
+                      <FormLabel>{t("Salary Type")}</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select Type" />
+                            <SelectValue placeholder={t("Select Type")} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="fixed_only">Fixed Only</SelectItem>
+                          <SelectItem value="fixed_only">
+                            {t("Fixed Only")}
+                          </SelectItem>
                           <SelectItem value="commission_only">
-                            Commission Only
+                            {t("Commission Only")}
                           </SelectItem>
                           <SelectItem value="fixed_plus_commission">
-                            Fixed + Commission
+                            {t("Fixed + Commission")}
                           </SelectItem>
                         </SelectContent>
                       </Select>
@@ -165,7 +169,7 @@ const NewCommission = () => {
                       name="fixed_salary"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Fixed Salary</FormLabel>
+                          <FormLabel>{t("Fixed Salary")}</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -182,7 +186,9 @@ const NewCommission = () => {
                       name="bonus_perfect_attendance"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Bonus (Perfect Attendance)</FormLabel>
+                          <FormLabel>
+                            {t("Bonus (Perfect Attendance)")}
+                          </FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -199,7 +205,7 @@ const NewCommission = () => {
                       name="deduction_per_absent"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Deduction (Per Absent)</FormLabel>
+                          <FormLabel>{t("Deduction (Per Absent)")}</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -222,7 +228,9 @@ const NewCommission = () => {
                       name="commission_per_new_store"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Commission (Per New Store)</FormLabel>
+                          <FormLabel>
+                            {t("Commission (Per New Store)")}
+                          </FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -239,7 +247,9 @@ const NewCommission = () => {
                       name="commission_per_approved"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Commission (Per Approved)</FormLabel>
+                          <FormLabel>
+                            {t("Commission (Per Approved)")}
+                          </FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -256,7 +266,7 @@ const NewCommission = () => {
                       name="commission_on_sales"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Commission % on Sales</FormLabel>
+                          <FormLabel>{t("Commission % on Sales")}</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -274,7 +284,9 @@ const NewCommission = () => {
                       name="bonus_on_target_achievement"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Bonus (Target Achievement)</FormLabel>
+                          <FormLabel>
+                            {t("Bonus (Target Achievement)")}
+                          </FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -295,7 +307,7 @@ const NewCommission = () => {
                     name="deduction_late_followup"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Deduction (Late Follow-up)</FormLabel>
+                        <FormLabel>{t("Deduction (Late Follow-up)")}</FormLabel>
                         <FormControl>
                           <Input type="number" placeholder="0.00" {...field} />
                         </FormControl>
@@ -315,7 +327,7 @@ const NewCommission = () => {
                   {isSubmitting && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  Save Commission
+                  {t("Save Commission")}
                 </Button>
               </div>
             </form>

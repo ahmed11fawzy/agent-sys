@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { useGetAllCommissionsQuery } from "@/features/api-queries/commission-query";
 import { CommissionStats } from "../../components/charts/commission-stats";
 import { CommissionCharts } from "../../components/charts/commission-charts";
+import { useTranslation } from "react-i18next";
 
 const AgentCommissions = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: commissionsData, isLoading } = useGetAllCommissionsQuery({});
 
@@ -33,7 +35,7 @@ const AgentCommissions = () => {
           icon={<User />}
         />
         <Button variant="primary" onClick={handleCreateCommission}>
-          Create Commission
+          {t("Create Commission")}
         </Button>
       </header>
 

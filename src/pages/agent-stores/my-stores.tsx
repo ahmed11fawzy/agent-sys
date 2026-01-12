@@ -111,45 +111,45 @@ const MyStores = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <StatsCard
             title={allStoresData?.meta?.total || 0}
-            subtitle="Total Stores"
+            subtitle={t("Total Stores")}
             icon={<Store />}
             Badge={{
               variant: "default",
               className: "bg-blue-100 text-blue-700",
-              badgeTitle: "All",
+              badgeTitle: t("All"),
               badgeIcon: <Activity className="w-4 h-4 mr-1" />,
             }}
           />
           <StatsCard
             title={activeStoresData?.meta?.total || 0}
-            subtitle="Active Stores"
+            subtitle={t("Active Stores")}
             icon={<CircleCheckBig />}
             Badge={{
               variant: "default",
               className: "bg-green-100 text-green-700",
-              badgeTitle: "Active",
+              badgeTitle: t("Active"),
               badgeIcon: <CircleCheckBig className="w-4 h-4 mr-1" />,
             }}
           />
           <StatsCard
             title={pendingStoresData?.meta?.total || 0}
-            subtitle="Pending Stores"
+            subtitle={t("Pending Stores")}
             icon={<Clock />}
             Badge={{
               variant: "default",
               className: "bg-yellow-100 text-yellow-700",
-              badgeTitle: "Pending",
+              badgeTitle: t("Pending"),
               badgeIcon: <AlertTriangle className="w-4 h-4 mr-1" />,
             }}
           />
           <StatsCard
             title={rejectedStoresData?.meta?.total || 0}
-            subtitle="Rejected Stores"
+            subtitle={t("Rejected Stores")}
             icon={<XCircle />}
             Badge={{
               variant: "destructive",
               className: "bg-red-100 text-red-700",
-              badgeTitle: "Rejected",
+              badgeTitle: t("Rejected"),
               badgeIcon: <XCircle className="w-4 h-4 mr-1" />,
             }}
           />

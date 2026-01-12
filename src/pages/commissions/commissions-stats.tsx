@@ -35,7 +35,7 @@ const commissionsStatsMock: StatsCardProps[] = [
   },
   {
     title: "58",
-    subtitle: "ٍSalary Coverage",
+    subtitle: "Salary Coverage",
     icon: <Landmark />,
     Badge: {
       variant: "secondary",
@@ -46,7 +46,7 @@ const commissionsStatsMock: StatsCardProps[] = [
   },
   {
     title: "7%",
-    subtitle: "Suspended Salary ",
+    subtitle: "Suspended Salary",
     icon: <AlertTriangle />,
     Badge: {
       variant: "destructive",

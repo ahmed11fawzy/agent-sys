@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { Separator } from "../ui/separator";
 import UserAvatar from "../user-avatar/user-avatar";
 import { AgentItems, LeaderItems } from "./sidebar-items";
-import { LogOut } from "lucide-react";
+import { LogIn, LogOut } from "lucide-react";
 
 export function AppSidebar() {
   const { language } = useAppSelector((state) => state.settings);
@@ -77,7 +77,7 @@ export function AppSidebar() {
           <UserAvatar />
         </div>
         <Link to="/signin">
-          <LogOut size={20} />
+          {language === "ar" ? <LogOut size={20} /> : <LogIn size={20} />}
         </Link>
       </SidebarFooter>
     </Sidebar>

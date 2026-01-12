@@ -86,8 +86,8 @@ const Agents = () => {
     <main className="mt-5 container mx-auto ">
       <header className="flex justify-between items-center mb-6">
         <Header
-          title="Agents"
-          subTitle="Manage and view all your agents here."
+          title={t("Agents")}
+          subTitle={t("Manage and view all your agents here.")}
           icon={<> </>}
         />
 

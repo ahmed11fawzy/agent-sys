@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import {
   createAgentSchema,
   type CreateAgentSchema,
@@ -25,19 +26,21 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useTranslation } from "react-i18next";
-
-const steps = [
-  { id: 1, title: "User Information" },
-  { id: 2, title: "Agent Details" },
-];
+import { useAppSelector } from "@/store";
 
 const NewAgentForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [createAgent, { isLoading }] = useCreateAgentMutation();
   const { t } = useTranslation();
+  const { language } = useAppSelector((state) => state.settings);
+
+  const steps = [
+    { id: 1, title: t("User Information") },
+    { id: 2, title: t("Agent Details") },
+  ];
 
   const form = useForm<CreateAgentSchema>({
-    resolver: zodResolver(createAgentSchema),
+    resolver: zodResolver(createAgentSchema(t)),
     defaultValues: {
       user_name: "",
       email: "",
@@ -67,13 +70,13 @@ const NewAgentForm = () => {
       console.log(data);
       const res: any = await createAgent(data).unwrap();
       console.log(res);
-      alert("Agent created successfully");
+      toast.success(t("Agent created successfully"));
 
       form.reset();
       setCurrentStep(1);
     } catch (error) {
       console.error("Failed to create agent:", error);
-      alert("Failed to create agent");
+      toast.error(t("Failed to create agent"));
     }
   };
 
@@ -145,18 +148,20 @@ const NewAgentForm = () => {
           {currentStep === 1 && (
             <Card className="animate-in fade-in-50 duration-300">
               <CardHeader>
-                <CardTitle>User Information</CardTitle>
+                <CardTitle>{t("User Information")}</CardTitle>
                 <CardDescription>
-                  Enter the personal details for the agent's user account.
+                  {t(
+                    "Enter the personal details for the agent's user account."
+                  )}
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-6 md:grid-cols-2">
                 <Field>
-                  <FieldLabel htmlFor="user_name">Name</FieldLabel>
+                  <FieldLabel htmlFor="user_name">{t("Name")}</FieldLabel>
                   <Input
                     id="user_name"
                     {...form.register("user_name")}
-                    placeholder="Full Name"
+                    placeholder={t("Full Name")}
                   />
                   <FieldError
                     errors={[
@@ -166,24 +171,24 @@ const NewAgentForm = () => {
                 </Field>
 
                 <Field>
-                  <FieldLabel htmlFor="email">Email</FieldLabel>
+                  <FieldLabel htmlFor="email">{t("Email")}</FieldLabel>
                   <Input
                     id="email"
                     type="email"
                     {...form.register("email")}
-                    placeholder="Email Address"
+                    placeholder={t("Email Address")}
                   />
                   <FieldError
                     errors={[{ message: form.formState.errors.email?.message }]}
                   />
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <FieldLabel htmlFor="password">{t("Password")}</FieldLabel>
                   <Input
                     id="password"
                     type="password"
                     {...form.register("password")}
-                    placeholder="Password"
+                    placeholder={t("Password")}
                   />
                   <FieldError
                     errors={[
@@ -194,13 +199,13 @@ const NewAgentForm = () => {
 
                 <Field>
                   <FieldLabel htmlFor="confirmPassword">
-                    Confirm Password
+                    {t("Confirm Password")}
                   </FieldLabel>
                   <Input
                     id="confirmPassword"
                     type="password"
                     {...form.register("password_confirmation")}
-                    placeholder="Confirm Password"
+                    placeholder={t("Confirm Password")}
                   />
                   <FieldError
                     errors={[
@@ -212,11 +217,11 @@ const NewAgentForm = () => {
                   />
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="phone">Phone</FieldLabel>
+                  <FieldLabel htmlFor="phone">{t("Phone")}</FieldLabel>
                   <Input
                     id="phone"
                     {...form.register("phone")}
-                    placeholder="Phone Number"
+                    placeholder={t("Phone Number")}
                   />
                   <FieldError
                     errors={[{ message: form.formState.errors.phone?.message }]}
@@ -224,7 +229,9 @@ const NewAgentForm = () => {
                 </Field>
 
                 <Field>
-                  <FieldLabel htmlFor="birth_date">Birth Date</FieldLabel>
+                  <FieldLabel htmlFor="birth_date">
+                    {t("Birth Date")}
+                  </FieldLabel>
                   <Input
                     id="birth_date"
                     type="date"
@@ -238,15 +245,15 @@ const NewAgentForm = () => {
                 </Field>
 
                 <Field>
-                  <FieldLabel>Gender</FieldLabel>
+                  <FieldLabel>{t("Gender")}</FieldLabel>
 
                   <Select {...form.register("gender")}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select gender" />
+                      <SelectValue placeholder={t("Select gender")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1">Male</SelectItem>
-                      <SelectItem value="0">Female</SelectItem>
+                      <SelectItem value="1">{t("Male")}</SelectItem>
+                      <SelectItem value="0">{t("Female")}</SelectItem>
                     </SelectContent>
                   </Select>
 
@@ -258,16 +265,18 @@ const NewAgentForm = () => {
                 </Field>
 
                 <Field>
-                  <FieldLabel>Status</FieldLabel>
+                  <FieldLabel>{t("Status")}</FieldLabel>
                   <Select {...form.register("status")}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
+                      <SelectValue placeholder={t("Select status")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="active">Active</SelectItem>
-                      <SelectItem value="inactive">Inactive</SelectItem>
-                      <SelectItem value="suspended">Suspended</SelectItem>
-                      <SelectItem value="on_leave">On Leave</SelectItem>
+                      <SelectItem value="active">{t("Active")}</SelectItem>
+                      <SelectItem value="inactive">{t("Inactive")}</SelectItem>
+                      <SelectItem value="suspended">
+                        {t("Suspended")}
+                      </SelectItem>
+                      <SelectItem value="on_leave">{t("On Leave")}</SelectItem>
                     </SelectContent>
                   </Select>
 
@@ -279,12 +288,12 @@ const NewAgentForm = () => {
                 </Field>
 
                 <Field>
-                  <FieldLabel htmlFor="avatar">Avatar</FieldLabel>
+                  <FieldLabel htmlFor="avatar">{t("Avatar")}</FieldLabel>
                   <Input
                     id="avatar"
                     type="file"
                     {...form.register("avatar")}
-                    placeholder="Avatar"
+                    placeholder={t("Avatar")}
                   />
                   <FieldError
                     errors={[
@@ -305,16 +314,18 @@ const NewAgentForm = () => {
               <CardHeader>
                 <CardTitle>{t("Agent Details")}</CardTitle>
                 <CardDescription>
-                  Enter the specific details for the agent profile.
+                  {t("Enter the specific details for the agent profile.")}
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-6 md:grid-cols-2">
                 <Field>
-                  <FieldLabel htmlFor="national_id">National ID</FieldLabel>
+                  <FieldLabel htmlFor="national_id">
+                    {t("National ID")}
+                  </FieldLabel>
                   <Input
                     id="national_id"
                     {...form.register("national_id")}
-                    placeholder="National ID"
+                    placeholder={t("National ID")}
                   />
                   <FieldError
                     errors={[
@@ -324,11 +335,11 @@ const NewAgentForm = () => {
                 </Field>
 
                 <Field>
-                  <FieldLabel htmlFor="bank_name">Bank Name</FieldLabel>
+                  <FieldLabel htmlFor="bank_name">{t("Bank Name")}</FieldLabel>
                   <Input
                     id="bank_name"
                     {...form.register("bank_name")}
-                    placeholder="Bank Name"
+                    placeholder={t("Bank Name")}
                   />
                   <FieldError
                     errors={[
@@ -338,11 +349,11 @@ const NewAgentForm = () => {
                 </Field>
 
                 <Field>
-                  <FieldLabel htmlFor="iban">IBAN</FieldLabel>
+                  <FieldLabel htmlFor="iban">{t("IBAN")}</FieldLabel>
                   <Input
                     id="iban"
                     {...form.register("iban")}
-                    placeholder="IBAN"
+                    placeholder={t("IBAN")}
                   />
                   <FieldError
                     errors={[{ message: form.formState.errors.iban?.message }]}
@@ -513,7 +524,11 @@ const NewAgentForm = () => {
                 variant="primary"
               >
                 {t("Next")}
-                <ChevronRight className="w-4 h-4" />
+                {language === "ar" ? (
+                  <ChevronLeft className="w-4 h-4" />
+                ) : (
+                  <ChevronRight className="w-4 h-4" />
+                )}
               </Button>
             ) : (
               <Button

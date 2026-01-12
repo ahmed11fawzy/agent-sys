@@ -25,16 +25,18 @@ import { toast } from "sonner";
 import { commissionSchema } from "@/validations/create-commission-schema.zod";
 import * as z from "zod";
 import { useAppSelector } from "@/store";
+import { useTranslation } from "react-i18next";
 
-type CommissionFormValues = z.infer<typeof commissionSchema>;
+type CommissionFormValues = z.infer<ReturnType<typeof commissionSchema>>;
 
 export function CommissionForm({ onSuccess }: { onSuccess?: () => void }) {
   const [createCommission, { isLoading }] = useCreateAgentCommissionMutation();
 
+  const { t } = useTranslation();
   const { user } = useAppSelector((state) => state.auth);
   const form = useForm<CommissionFormValues>({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(commissionSchema) as any, // Cast to any to handle type mismatch
+    resolver: zodResolver(commissionSchema(t)) as any, // Cast to any to handle type mismatch
     defaultValues: {
       agent_id: user?.id,
       period_type: "monthly",

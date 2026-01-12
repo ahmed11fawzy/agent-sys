@@ -65,8 +65,8 @@ const Stores = () => {
   return (
     <main>
       <Header
-        title="Stores"
-        subTitle="show records of stores"
+        title={t("Stores")}
+        subTitle={t("show records of stores")}
         icon={<Store />}
       />
       <section>

@@ -16,7 +16,7 @@ const Home = () => {
     <main className="mt-5">
       <Header
         title="Dashboard"
-        subTitle="welcome to dashboard "
+        subTitle="welcome to dashboard"
         icon={<HomeIcon className="h-5 w-5" />}
       />
       <section className="flex flex-col gap-5">

@@ -32,7 +32,7 @@ const Signin = () => {
             <img
               className="w-16 h-16 object-fit border"
               src="https://res.cloudinary.com/doxyvufkz/image/upload/v1766599799/logo192_bzai2h.png"
-              alt="alballd"
+              alt={t("alballd")}
             />
           </CardTitle>
           <CardDescription className="text-center text-lg font-bold text-dark ">

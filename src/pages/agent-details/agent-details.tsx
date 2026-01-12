@@ -16,8 +16,10 @@ import {
   User,
 } from "lucide-react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const AgentDetails = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   console.log("HASHED ID : ", id);
 
@@ -45,12 +47,12 @@ const AgentDetails = () => {
                 title={
                   data?.data?.total_merchants ? data.data.total_merchants : 20
                 }
-                subtitle="Total recorded stores"
+                subtitle={t("Total recorded stores")}
                 icon={<Store />}
                 Badge={{
                   variant: "default",
                   className: "bg-(--primary-100) text-(--primary-700) ",
-                  badgeTitle: "Active stores",
+                  badgeTitle: t("Active stores"),
                   badgeIcon: <CircleCheckBig />,
                 }}
               />
@@ -58,7 +60,7 @@ const AgentDetails = () => {
                 title={
                   data.data.monthly_target ? data.data.monthly_target : 200
                 }
-                subtitle="Monthly Target"
+                subtitle={t("Monthly Target")}
                 icon={<Target />}
                 Badge={{
                   variant: "default",
@@ -69,12 +71,12 @@ const AgentDetails = () => {
               />
               <StatsCard
                 title={data?.data?.base_salary ? data.data.base_salary : 200}
-                subtitle="Base Salary"
+                subtitle={t("Base Salary")}
                 icon={<Banknote />}
                 Badge={{
                   variant: "default",
                   className: "bg-blue-100 text-blue-700 p-2",
-                  badgeTitle: `Commission Rate ${data?.data?.commission_rate ? data.data.commission_rate : 5}%`,
+                  badgeTitle: `${t("Commission Rate")} ${data?.data?.commission_rate ? data.data.commission_rate : 5}%`,
                   badgeIcon: <> </>,
                 }}
               />
@@ -84,7 +86,7 @@ const AgentDetails = () => {
                     ? data.data.rejected_merchants
                     : 20
                 }
-                subtitle="Rejected stores"
+                subtitle={t("Rejected stores")}
                 icon={<Store />}
                 Badge={{
                   variant: "default",

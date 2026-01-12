@@ -70,15 +70,15 @@ const MyDashboard = () => {
   return (
     <main>
       <Header
-        title="My Dashboard"
-        subTitle="Welcome to My Dashboard"
+        title={t("My Dashboard")}
+        subTitle={t("welcome to dashboard")}
         icon={<Home />}
       />
       <section className="flex flex-col gap-4">
         <AgentStats />
         <Card>
           <CardHeader>
-            <CardTitle>List of newly added stores</CardTitle>
+            <CardTitle>{t("List of newly added stores")}</CardTitle>
           </CardHeader>
           <CardContent>
             {/* Error Handling */}

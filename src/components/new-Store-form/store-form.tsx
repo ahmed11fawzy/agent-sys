@@ -23,62 +23,62 @@ import BusinessStep from "./steps/business-step";
 import { useCreateStoreMutation } from "@/features/api-queries/stores-query";
 // import { toast } from "sonner";
 
-const steps = [
-  {
-    id: "user",
-    title: "User Information",
-    schema: userSchema,
-    fields: [
-      "user.name",
-      "user.email",
-      "user.password",
-      "user.password_confirmation",
-      "user.phone",
-      "user.type",
-    ] as const,
-  },
-  {
-    id: "store",
-    title: "Store Information",
-    schema: storeSchema,
-    fields: [
-      "store.name_ar",
-      "store.name_en",
-      "store.business_activitie_id",
-      "store.market_id",
-      "store.email",
-      "store.phone",
-      "store.location",
-      "store.street",
-      "store.zip_code",
-      "store.subcode",
-      "store.mailbox",
-      "store.location_id",
-    ] as const,
-  },
-  {
-    id: "business",
-    title: "Business Information",
-    schema: businessSchema,
-    fields: [
-      "business.business_name",
-      "business.commercial_registration_number",
-      "business.unified_number",
-      "business.cr_expiry_date",
-      "business.owner_phone",
-      "business.municipal_license_number",
-      "business.tax_number",
-    ] as const,
-  },
-];
-
 const StoreForm = () => {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
   const [createStore, { isLoading }] = useCreateStoreMutation();
 
+  const steps = [
+    {
+      id: "user",
+      title: "User Information",
+      schema: userSchema(t),
+      fields: [
+        "user.name",
+        "user.email",
+        "user.password",
+        "user.password_confirmation",
+        "user.phone",
+        "user.type",
+      ] as const,
+    },
+    {
+      id: "store",
+      title: "Store Information",
+      schema: storeSchema(t),
+      fields: [
+        "store.name_ar",
+        "store.name_en",
+        "store.business_activitie_id",
+        "store.market_id",
+        "store.email",
+        "store.phone",
+        "store.location",
+        "store.street",
+        "store.zip_code",
+        "store.subcode",
+        "store.mailbox",
+        "store.location_id",
+      ] as const,
+    },
+    {
+      id: "business",
+      title: "Business Information",
+      schema: businessSchema(t),
+      fields: [
+        "business.business_name",
+        "business.commercial_registration_number",
+        "business.unified_number",
+        "business.cr_expiry_date",
+        "business.owner_phone",
+        "business.municipal_license_number",
+        "business.tax_number",
+      ] as const,
+    },
+  ];
+
   const methods = useForm<StoreFormValues>({
-    resolver: zodResolver(storeFormSchema),
+    resolver: zodResolver(storeFormSchema(t)),
     mode: "onChange",
     defaultValues: {
       user: {

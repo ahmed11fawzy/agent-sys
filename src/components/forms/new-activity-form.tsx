@@ -38,7 +38,7 @@ export const NewActivityForm = () => {
     useGetAgentStoresQuery("");
 
   const form = useForm<CreateActivityFormValues>({
-    resolver: zodResolver(createActivitySchema),
+    resolver: zodResolver(createActivitySchema(t)),
     defaultValues: {
       activity_type: "visit",
       location_name: "",
