@@ -25,10 +25,17 @@ import coreApiSlice from "../core-api-slice";
             }),
             providesTags: ['Agents'],
         }),
+        dashboardStats: builder.query({
+            query: () => ({
+                url: `/sales/dashboard`,
+                method: 'GET',
+            }),
+            providesTags: ['DashboardStats'],
+        }),
     }),
 });
 
 
-export const {useGetAgentsQuery, useLazyGetAgentsQuery, useCreateAgentMutation,useGetAgentByIdQuery} = agentQuery;
+export const {useGetAgentsQuery, useLazyGetAgentsQuery, useCreateAgentMutation,useGetAgentByIdQuery,useDashboardStatsQuery} = agentQuery;
 
 
