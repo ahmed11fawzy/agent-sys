@@ -21,6 +21,8 @@ import {
 } from "@/features/api-queries/commission-query";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
+import { getColumns } from "@/columns/all-team-commission-stats-column";
 
 const Commissions = () => {
   const navigate = useNavigate();
@@ -28,12 +30,13 @@ const Commissions = () => {
   const { data: commissionSettings } = useGetCommissionSettingsQuery(
     new URLSearchParams({ page: "1" }).toString()
   );
-  const { data: commissions } = useGetAllCommissionsQuery();
+
+  const { data: allCommissions } = useGetAllCommissionsQuery();
+  console.log(allCommissions);
   const createNewCommissionHandler = () => {
     navigate("/commissions/new-commission");
   };
 
-  console.log("commissions", commissions);
   return (
     <main className="mt-5">
       <header className="flex items-center justify-between">
@@ -69,17 +72,42 @@ const Commissions = () => {
       </header>
       <section className="flex flex-col gap-5">
         <CommissionsStats />
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("Commissions and Salary List")}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <DataTable
-              getColumns={getCommissionColumns}
-              data={commissionSettings?.data || []}
-            />
-          </CardContent>
-        </Card>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("Commissions List")}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DataTable
+                getColumns={getColumns}
+                data={allCommissions?.data || []}
+              />
+            </CardContent>
+          </Card>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {t("Commissions and Salary (Bonuses / Deductions) List")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DataTable
+                getColumns={getCommissionColumns}
+                data={commissionSettings?.data || []}
+              />
+            </CardContent>
+          </Card>
+        </motion.div>
       </section>
     </main>
   );

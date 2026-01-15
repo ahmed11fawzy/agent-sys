@@ -8,6 +8,7 @@ export type Commission = {
   id: number;
   uuid: string;
   agent_id: number;
+  name: string;
   period: {
     type: "monthly" | "weekly" | "daily";
     date: string;
@@ -37,7 +38,7 @@ export type CommissionFinancials = {
 };
 
 export type CommissionPayment = {
-  status: "paid" | "pending" | "cancelled" | "approved" | "calculated";
+  status: "paid" | "pending" | "cancelled" | "approved" | "calculated" | "rejected";
   method: "bank_transfer" | "wallet" | "cash";
   paid_at: string | null;
   transaction_ref: string | null;
