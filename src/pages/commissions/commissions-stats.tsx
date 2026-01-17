@@ -14,7 +14,7 @@ import { motion } from "motion/react";
 
 const CommissionsStats = () => {
   const { data: teamLeaderCommissionsStats } =
-    useGetTeamLeaderCommissionsStatsQuery();
+    useGetTeamLeaderCommissionsStatsQuery({});
   const commissionsStats = [
     {
       title: teamLeaderCommissionsStats?.summary?.total_commissions?.amount,
@@ -74,7 +74,7 @@ const CommissionsStats = () => {
             title={stat.title}
             subtitle={stat.subtitle}
             icon={stat.icon}
-            Badge={stat.Badge}
+            Badge={stat.Badge as StatsCardProps["Badge"]}
           />
         </motion.div>
       ))}

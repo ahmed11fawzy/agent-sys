@@ -67,9 +67,7 @@ export interface BaseVirtualScrollProps<T> {
   itemKey?: (item: T, index: number) => string | number;
 }
 
-export interface VirtualListProps<T> extends BaseVirtualScrollProps<T> {
-  /** Single column list - no additional layout props needed */
-}
+export type VirtualListProps<T> = BaseVirtualScrollProps<T>
 
 export interface VirtualGridListProps<T> extends BaseVirtualScrollProps<T> {
   /** Column configuration */

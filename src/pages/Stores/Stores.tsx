@@ -7,6 +7,7 @@ import { useLazyGetStoresQuery } from "@/features/api-queries/stores-query";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import type { AgentStore } from "@/types/store-type";
 import { Store } from "lucide-react";
+import { motion } from "motion/react";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -56,8 +57,14 @@ const Stores = () => {
   });
   // Render Item for Virtualized List
   const renderAgent = useCallback(
-    (store: AgentStore, index: number, virtualRow: any) => (
-      <StoreCard store={store} />
+    (store: AgentStore, index: number) => (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: index * 0.1 }}
+      >
+        <StoreCard store={store} />,
+      </motion.div>
     ),
     []
   );
@@ -96,7 +103,6 @@ const Stores = () => {
               itemKey={(store: AgentStore) => store.id}
               height="100%"
               width="100%"
-              className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
               endMessage={
                 <div className="flex flex-col items-center justify-center p-4 text-muted-foreground">
                   <p>{t("You have reached the end of the list.")}</p>

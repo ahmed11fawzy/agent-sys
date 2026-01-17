@@ -13,7 +13,7 @@ import { motion } from "motion/react";
 import { Spinner } from "@/components/ui/spinner";
 
 const TeamStats = () => {
-  const { data: dashboardStats, isLoading } = useDashboardStatsQuery();
+  const { data: dashboardStats, isLoading } = useDashboardStatsQuery({});
   if (isLoading) return <Spinner />;
   const statsConfig = [
     {

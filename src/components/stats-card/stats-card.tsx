@@ -13,7 +13,12 @@ const StatsCard = ({
   title,
   subtitle,
   icon,
-  Badge: { variant, className, badgeTitle, badgeIcon },
+  Badge: { variant, className, badgeTitle, badgeIcon } = {
+    variant: "default",
+    className: "",
+    badgeTitle: "",
+    badgeIcon: <></>,
+  },
 }: StatsCardProps) => {
   const { t } = useTranslation();
   return (

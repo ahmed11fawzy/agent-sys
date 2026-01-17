@@ -74,7 +74,9 @@ export const getColumns = (t: TFunction): ColumnDef<Commission>[] => [
     accessorKey: "financials.commission",
     header: t("Commission"),
     cell: ({ row }) => {
-      const amount = parseFloat(row.original.financials.commission);
+      const amount = parseFloat(
+        row.original.financials.commission as unknown as string
+      );
       return <span className="font-medium">{amount.toFixed(2)}</span>;
     },
   },
@@ -84,7 +86,9 @@ export const getColumns = (t: TFunction): ColumnDef<Commission>[] => [
     accessorKey: "financials.total",
     header: t("Total Payout"),
     cell: ({ row }) => {
-      const amount = parseFloat(row.original.financials.total);
+      const amount = parseFloat(
+        row.original.financials.total as unknown as string
+      );
       return (
         <span className="font-bold text-primary">{amount.toFixed(2)}</span>
       );

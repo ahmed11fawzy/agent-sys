@@ -1,24 +1,14 @@
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { type AgentStore } from "@/types/store-type";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import {
-  Badge,
-  CheckIcon,
-  Eye,
-  MapPin,
-  Phone,
-  Trash,
-  User,
-} from "lucide-react";
+import { CheckIcon, Eye, MapPin, Phone, Trash, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { ShinyButton } from "../ui/shiny-button";
-import { useAppSelector } from "@/store";
+import { Badge } from "../ui/badge";
 
 const StoreCard = ({ store }: { store: AgentStore }) => {
   const { t } = useTranslation();
   console.log("store", store);
-
-  const { language } = useAppSelector((state) => state.settings);
 
   return (
     <Card>

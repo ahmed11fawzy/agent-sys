@@ -8,7 +8,10 @@ import { VirtualGridList } from "@/components/virtual-scroll";
 import type { AgentStore } from "@/types/store-type";
 import { useCallback, useState } from "react";
 import { useLazyGetAgentStoresQuery } from "@/features/api-queries/stores-query";
-import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
+import {
+  useInfiniteScroll,
+  type FetchFunction,
+} from "@/hooks/use-infinite-scroll";
 import StoreCard from "@/components/store-card/store-card";
 import { useTranslation } from "react-i18next";
 import { motion } from "motion/react";
@@ -57,7 +60,7 @@ const MyDashboard = () => {
     isLoading,
     error: scrollError,
   } = useInfiniteScroll<AgentStore>({
-    fetchFn: fetchStores,
+    fetchFn: fetchStores as FetchFunction<AgentStore>,
     pageSize: per_page,
     initialPage: 1,
   });

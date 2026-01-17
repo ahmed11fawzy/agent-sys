@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -36,7 +36,9 @@ export const SignInForm = () => {
   const navigate = useNavigate();
   // 1. Define your form.
   const form = useForm<z.infer<ReturnType<typeof signinSchema>>>({
-    resolver: zodResolver(signinSchema(t)),
+    resolver: zodResolver(signinSchema(t)) as Resolver<
+      z.infer<ReturnType<typeof signinSchema>>
+    >,
     defaultValues: {
       email: "",
       password: "",
@@ -76,7 +78,11 @@ export const SignInForm = () => {
             all_permissions,
           } as AuthorizedUser)
         );
-        navigate("/", { replace: true, state: { user: values } });
+        if (type === "team_manager") {
+          navigate("/", { replace: true, state: { user: values } });
+        } else {
+          navigate("/my-dashboard", { replace: true, state: { user: values } });
+        }
       } else {
         throw new Error((res as LoginError).message);
       }

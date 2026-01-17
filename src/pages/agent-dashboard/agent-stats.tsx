@@ -13,7 +13,7 @@ import {
 import { motion } from "motion/react";
 
 const AgentStats = () => {
-  const { data: dashboardStats, isLoading } = useDashboardStatsQuery();
+  const { data: dashboardStats, isLoading } = useDashboardStatsQuery({});
   console.log(dashboardStats);
   if (isLoading) return <Spinner />;
   const statsConfig = [

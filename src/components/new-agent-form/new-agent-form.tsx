@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import {
@@ -40,7 +40,7 @@ const NewAgentForm = () => {
   ];
 
   const form = useForm<CreateAgentSchema>({
-    resolver: zodResolver(createAgentSchema(t)),
+    resolver: zodResolver(createAgentSchema(t)) as Resolver<CreateAgentSchema>,
     defaultValues: {
       user_name: "",
       email: "",

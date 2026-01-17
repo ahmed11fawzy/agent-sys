@@ -6,7 +6,7 @@ export type StatsCardProps = {
     title: string,
     subtitle: string,
     icon: JSX.Element,
-    Badge: {
+    Badge?: {
         variant: variantType,
         className: string,
         badgeTitle: string,

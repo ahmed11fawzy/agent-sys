@@ -31,7 +31,7 @@ const Commissions = () => {
     new URLSearchParams({ page: "1" }).toString()
   );
 
-  const { data: allCommissions } = useGetAllCommissionsQuery();
+  const { data: allCommissions } = useGetAllCommissionsQuery({});
   console.log(allCommissions);
   const createNewCommissionHandler = () => {
     navigate("/commissions/new-commission");

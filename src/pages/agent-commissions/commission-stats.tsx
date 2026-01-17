@@ -1,4 +1,5 @@
 import StatsCard from "@/components/stats-card/stats-card";
+import type { StatsCardProps } from "@/components/stats-card/types";
 import {
   Store,
   Banknote,
@@ -70,7 +71,7 @@ export function CommissionStats() {
             title={stat.title}
             subtitle={stat.subtitle}
             icon={stat.icon}
-            Badge={stat.Badge}
+            Badge={stat.Badge as StatsCardProps["Badge"]}
           />
         </motion.div>
       ))}

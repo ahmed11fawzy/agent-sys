@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,7 @@ import UserStep from "./steps/user-step";
 import StoreStep from "./steps/store-step";
 import BusinessStep from "./steps/business-step";
 import { useCreateStoreMutation } from "@/features/api-queries/stores-query";
+import type z from "zod";
 // import { toast } from "sonner";
 
 const StoreForm = () => {
@@ -78,7 +79,7 @@ const StoreForm = () => {
   ];
 
   const methods = useForm<StoreFormValues>({
-    resolver: zodResolver(storeFormSchema(t)),
+    resolver: zodResolver(storeFormSchema(t)) as Resolver<StoreFormValues>,
     mode: "onChange",
     defaultValues: {
       user: {
@@ -137,7 +138,9 @@ const StoreForm = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
-  const onSubmit = async (data: StoreFormValues) => {
+  const onSubmit = async (
+    data: z.infer<ReturnType<typeof storeFormSchema>>
+  ) => {
     try {
       console.log("storedata", data);
 

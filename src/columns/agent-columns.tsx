@@ -15,7 +15,10 @@ export const getColumns = (t: TFunction): ColumnDef<Agent>[] => [
         <div className="flex items-center gap-2">
           <div className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-500 drop-shadow-accent">
             {(row.getValue("user") as AgentUser)?.avatar ? (
-              <img src={(row.getValue("user") as AgentUser).avatar} alt="" />
+              <img
+                src={(row.getValue("user") as AgentUser).avatar as string}
+                alt=""
+              />
             ) : (
               (row.getValue("user") as AgentUser).name.charAt(0).toUpperCase()
             )}

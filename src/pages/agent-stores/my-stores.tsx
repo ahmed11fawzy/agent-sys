@@ -9,7 +9,7 @@ import {
   useLazyGetAgentStoresQuery,
 } from "@/features/api-queries/stores-query";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
-import type { AgentStore, StorePayload } from "@/types/store-type";
+import type { AgentStore } from "@/types/store-type";
 import {
   Activity,
   AlertTriangle,
@@ -25,10 +25,10 @@ import { useNavigate } from "react-router-dom";
 const MyStores = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [page, setPage] = useState(1);
-  const [per_page, setPerPage] = useState(10);
-  const [status, setStatus] = useState("");
-  const [storeName, setStoreName] = useState("");
+
+  const [per_page] = useState(10);
+  const [status] = useState("");
+  const [storeName] = useState("");
 
   const [getAgentStores] = useLazyGetAgentStoresQuery();
 
@@ -45,7 +45,7 @@ const MyStores = () => {
   );
 
   const fetchStores = useCallback(
-    async (page: number, pageSize: number, signal: AbortSignal) => {
+    async (page: number, pageSize: number) => {
       const filterQuery = new URLSearchParams({
         page: page.toString(),
         per_page: pageSize.toString(),
@@ -79,9 +79,7 @@ const MyStores = () => {
   });
   // Render Item for Virtualized List
   const renderStore = useCallback(
-    (store: AgentStore, index: number, virtualRow: any) => (
-      <StoreCard store={store} />
-    ),
+    (store: AgentStore) => <StoreCard store={store} />,
     []
   );
 

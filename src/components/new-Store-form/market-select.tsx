@@ -22,12 +22,11 @@ interface MarketSelectProps {
 export function MarketSelect({ value, onChange }: MarketSelectProps) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState(""); // Add search if API supports it, currently just for show or local filter if needed
 
   const [getMarkets] = useLazyGetMarketsQuery();
 
   const fetchMarkets = useCallback(
-    async (page: number, pageSize: number, signal: AbortSignal) => {
+    async (page: number, pageSize: number) => {
       const query = new URLSearchParams({
         page: page.toString(),
         per_page: pageSize.toString(),
@@ -56,8 +55,6 @@ export function MarketSelect({ value, onChange }: MarketSelectProps) {
     initialPage: 1,
     enabled: open, // Only fetch when popover is open
   });
-
-  const selectedMarket = markets.find((m) => m.id.toString() === value);
 
   const renderItem = useCallback(
     (item: Market) => (
