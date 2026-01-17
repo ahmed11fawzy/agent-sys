@@ -32,8 +32,19 @@ export const commissionQuery = coreApiSlice.injectEndpoints({
       }),
       providesTags: ["Commission"],
     }),
+    getTeamLeaderCommissionsStats: builder.query({
+      query: () => ({
+        url: `/sales/payroll`,
+        method: "GET",
+      }),
+      providesTags: ["Commission"],
+    }),
   }),
 });
 
-export const { useCreateCommissionMutation, useGetCommissionSettingsQuery, useGetAllCommissionsQuery, useCreateAgentCommissionMutation } =
+export const { useCreateCommissionMutation,
+     useGetCommissionSettingsQuery, 
+   useGetAllCommissionsQuery, 
+   useCreateAgentCommissionMutation ,
+   useGetTeamLeaderCommissionsStatsQuery } =
   commissionQuery;

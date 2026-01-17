@@ -3,15 +3,15 @@ import { User, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useGetAllCommissionsQuery } from "@/features/api-queries/commission-query";
-import { CommissionStats } from "../../components/charts/commission-stats";
-import { CommissionCharts } from "../../components/charts/commission-charts";
+import { CommissionStats } from "./commission-stats";
+import { CommissionCharts } from "../../components/commission-chart/commission-charts";
 import { useTranslation } from "react-i18next";
 
 const AgentCommissions = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: commissionsData, isLoading } = useGetAllCommissionsQuery({});
-
+  console.log(commissionsData);
   const handleCreateCommission = () => {
     navigate("/agent-commissions/create");
   };
@@ -40,7 +40,7 @@ const AgentCommissions = () => {
       </header>
 
       <section>
-        <CommissionStats commissions={commissions} />
+        <CommissionStats />
       </section>
 
       <section>

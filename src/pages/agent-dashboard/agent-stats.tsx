@@ -1,69 +1,83 @@
 import StatsCard from "@/components/stats-card/stats-card";
-import type { StatsCardProps } from "@/components/stats-card/types";
+import { Spinner } from "@/components/ui/spinner";
+import { useDashboardStatsQuery } from "@/features/api-queries/agent-query";
 import {
   Store,
   TrendingUp,
   TrendingDown,
-  BarChart3,
-  UserCheck,
-  ShieldCheck,
   Banknote,
-  Archive,
-  TargetIcon,
+  User,
+  Activity,
+  BriefcaseBusiness,
 } from "lucide-react";
-
-const agentStatsMock: StatsCardProps[] = [
-  {
-    title: "8",
-    subtitle: "Daily Store ",
-    icon: <Store />,
-    Badge: {
-      variant: "secondary",
-      className: "bg-green-100 text-green-700",
-      badgeTitle: "",
-      badgeIcon: <TrendingUp />,
-    },
-  },
-  {
-    title: "39",
-    subtitle: "Total Store",
-    icon: <Archive />,
-    Badge: {
-      variant: "secondary",
-      className: "bg-(--primary-50) text-(--primary-700)",
-      badgeTitle: "81%",
-      badgeIcon: <ShieldCheck />,
-    },
-  },
-  {
-    title: "925.23",
-    subtitle: "Commission",
-    icon: <Banknote />,
-    Badge: {
-      variant: "secondary",
-      className: "bg-green-100 text-green-700",
-      badgeTitle: "+4%",
-      badgeIcon: <TrendingUp />,
-    },
-  },
-  {
-    title: "300",
-    subtitle: "Month Target",
-    icon: <TargetIcon />,
-    Badge: {
-      variant: "destructive",
-      className: "bg-red-100 text-red-700",
-      badgeTitle: "",
-      badgeIcon: <TrendingDown />,
-    },
-  },
-];
+import { motion } from "motion/react";
 
 const AgentStats = () => {
+  const { data: dashboardStats, isLoading } = useDashboardStatsQuery();
+  console.log(dashboardStats);
+  if (isLoading) return <Spinner />;
+  const statsConfig = [
+    {
+      title: dashboardStats?.data?.summary?.total_stores,
+      subtitle: "Total Registered Stores",
+      icon: <Store />,
+      badge: {
+        variant: "secondary" as const,
+        className: "bg-green-100 text-green-700",
+        badgeTitle: "+6",
+        badgeIcon: <TrendingUp />,
+      },
+    },
+    {
+      title: dashboardStats?.data?.summary?.monthly_visits,
+      subtitle: "Monthly Visits",
+      icon: <User />,
+      badge: {
+        variant: "secondary" as const,
+        className: "bg-gray-100 text-gray-700",
+        badgeTitle: "",
+        badgeIcon: <BriefcaseBusiness />,
+      },
+    },
+    {
+      title: dashboardStats?.data?.summary?.achievement_rate,
+      subtitle: "Achievement Rate",
+      icon: <Activity />,
+      badge: {
+        variant: "destructive" as const,
+        className: "bg-red-100 text-red-700",
+        badgeTitle: "-2",
+        badgeIcon: <TrendingDown />,
+      },
+    },
+    {
+      title: dashboardStats?.data?.summary?.monthly_commission?.amount,
+      subtitle: "Monthly Commissions",
+      icon: <Banknote />,
+      badge: {
+        variant: "destructive" as const,
+        className: "bg-blue-100 text-blue-700",
+        badgeTitle: "2%",
+        badgeIcon: <TrendingUp />,
+      },
+    },
+  ];
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {agentStatsMock.map((stat) => (
-        <StatsCard key={stat.title} {...stat} />
+      {statsConfig.map((stat, index) => (
+        <motion.div
+          key={stat.subtitle}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: index * 0.1 }} // Optional: stagger animation
+        >
+          <StatsCard
+            title={stat.title}
+            subtitle={stat.subtitle}
+            icon={stat.icon}
+            Badge={stat.badge}
+          />
+        </motion.div>
       ))}
     </div>
   );

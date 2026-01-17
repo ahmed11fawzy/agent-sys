@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Commission } from "@/types/commission-data-types";
+import { useTranslation } from "react-i18next";
 import {
   Area,
   AreaChart,
@@ -19,6 +20,7 @@ interface CommissionChartsProps {
 
 export function CommissionCharts({ commissions }: CommissionChartsProps) {
   // Sort by date ascending
+  const { t } = useTranslation();
   const sortedData = [...commissions].sort(
     (a, b) =>
       new Date(a.period.date).getTime() - new Date(b.period.date).getTime()
@@ -36,7 +38,7 @@ export function CommissionCharts({ commissions }: CommissionChartsProps) {
     <div className="grid gap-4 md:grid-cols-2">
       <Card className="col-span-1">
         <CardHeader>
-          <CardTitle>Financial Overview</CardTitle>
+          <CardTitle>{t("Financial Overview")}</CardTitle>
         </CardHeader>
         <CardContent className="pl-2">
           <ResponsiveContainer width="100%" height={350}>
@@ -72,7 +74,7 @@ export function CommissionCharts({ commissions }: CommissionChartsProps) {
 
       <Card className="col-span-1">
         <CardHeader>
-          <CardTitle>Store Statistics</CardTitle>
+          <CardTitle>{t("Store Statistics")}</CardTitle>
         </CardHeader>
         <CardContent className="pl-2">
           <ResponsiveContainer width="100%" height={350}>
@@ -97,19 +99,19 @@ export function CommissionCharts({ commissions }: CommissionChartsProps) {
                 dataKey="registered"
                 fill="#2563eb"
                 radius={[4, 4, 0, 0]}
-                name="Registered"
+                name={t("Registered")}
               />
               <Bar
                 dataKey="approved"
                 fill="#16a34a"
                 radius={[4, 4, 0, 0]}
-                name="Approved"
+                name={t("Approved")}
               />
               <Bar
                 dataKey="rejected"
                 fill="#dc2626"
                 radius={[4, 4, 0, 0]}
-                name="Rejected"
+                name={t("Rejected")}
               />
             </BarChart>
           </ResponsiveContainer>

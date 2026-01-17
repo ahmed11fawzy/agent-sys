@@ -11,6 +11,7 @@ import { useLazyGetAgentStoresQuery } from "@/features/api-queries/stores-query"
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import StoreCard from "@/components/store-card/store-card";
 import { useTranslation } from "react-i18next";
+import { motion } from "motion/react";
 
 const MyDashboard = () => {
   const { t } = useTranslation();
@@ -76,51 +77,57 @@ const MyDashboard = () => {
       />
       <section className="flex flex-col gap-4">
         <AgentStats />
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("List of newly added stores")}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {/* Error Handling */}
-            {scrollError && (
-              <div className="text-red-500 mb-4">
-                {t("Error")}: {t(scrollError)}
-              </div>
-            )}
-
-            {/* Virtualized Grid List */}
-            <div className="h-[600px] w-full  ">
-              {isLoading && agents.length === 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
-                  <AgentSkeleton />
-                  <AgentSkeleton />
-                  <AgentSkeleton />
-                  <AgentSkeleton />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("List of newly added stores")}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {/* Error Handling */}
+              {scrollError && (
+                <div className="text-red-500 mb-4">
+                  {t("Error")}: {t(scrollError)}
                 </div>
-              ) : (
-                <VirtualGridList<AgentStore>
-                  items={agents}
-                  renderItem={renderAgent}
-                  onEndReached={loadMore}
-                  isFetchingMore={isFetchingMore}
-                  hasMore={hasMore}
-                  estimateSize={220}
-                  itemKey={(agent: AgentStore) => agent.id}
-                  height="100%"
-                  width="100%"
-                  className="p-2"
-                  columns={{ default: 1, sm: 2, md: 3, lg: 4 }}
-                  gap={16}
-                  endMessage={
-                    <div className="flex flex-col items-center justify-center p-4 text-muted-foreground">
-                      <p>{t("You have reached the end of the list.")}</p>
-                    </div>
-                  }
-                />
               )}
-            </div>
-          </CardContent>
-        </Card>
+
+              {/* Virtualized Grid List */}
+              <div className="h-[600px] w-full  ">
+                {isLoading && agents.length === 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+                    <AgentSkeleton />
+                    <AgentSkeleton />
+                    <AgentSkeleton />
+                    <AgentSkeleton />
+                  </div>
+                ) : (
+                  <VirtualGridList<AgentStore>
+                    items={agents}
+                    renderItem={renderAgent}
+                    onEndReached={loadMore}
+                    isFetchingMore={isFetchingMore}
+                    hasMore={hasMore}
+                    estimateSize={220}
+                    itemKey={(agent: AgentStore) => agent.id}
+                    height="100%"
+                    width="100%"
+                    className="p-2"
+                    columns={{ default: 1, sm: 2, md: 3, lg: 4 }}
+                    gap={16}
+                    endMessage={
+                      <div className="flex flex-col items-center justify-center p-4 text-muted-foreground">
+                        <p>{t("You have reached the end of the list.")}</p>
+                      </div>
+                    }
+                  />
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       </section>
     </main>
   );
