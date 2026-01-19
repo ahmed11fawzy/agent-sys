@@ -6,6 +6,10 @@ import { useGetAllCommissionsQuery } from "@/features/api-queries/commission-que
 import { CommissionStats } from "./commission-stats";
 import { CommissionCharts } from "../../components/commission-chart/commission-charts";
 import { useTranslation } from "react-i18next";
+import { motion } from "motion/react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DataTable } from "@/components/table/data-table";
+import { getColumns } from "@/columns/all-team-commission-stats-column";
 
 const AgentCommissions = () => {
   const { t } = useTranslation();
@@ -47,7 +51,22 @@ const AgentCommissions = () => {
         <CommissionCharts commissions={commissions} />
       </section>
 
-      <section>{/* Existing content or table would go here */}</section>
+      <section>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("Commissions List")}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DataTable getColumns={getColumns} data={commissions || []} />
+            </CardContent>
+          </Card>
+        </motion.div>
+      </section>
     </main>
   );
 };
