@@ -6,6 +6,7 @@ import {
   Inbox,
   Settings,
   Store,
+  Wallet,
 } from "lucide-react";
 import type { UserType } from "@/types/user-type";
 import type { LucideIcon } from "lucide-react";
@@ -40,6 +41,12 @@ export const LeaderItems: SidebarItem[] = [
     title: "Commissions",
     url: "/commissions",
     icon: Banknote,
+    allowedRoles: ["team_manager"],
+  },
+  {
+    title: "Wallet",
+    url: "/wallet",
+    icon: Wallet,
     allowedRoles: ["team_manager"],
   },
   {
@@ -79,6 +86,12 @@ export const AgentItems: SidebarItem[] = [
     title: "My Commissions",
     url: "/my-commission",
     icon: Banknote,
+    allowedRoles: ["sales_agent"],
+  },
+  {
+    title: "Wallet",
+    url: "/wallet",
+    icon: Wallet,
     allowedRoles: ["sales_agent"],
   },
 ];

@@ -22,6 +22,7 @@ import NewCommission from "./pages/new-commission/new-commission";
 import AgentCommissions from "./pages/agent-commissions/agent-commissions";
 import NewCommissionCalculations from "./pages/new-calculations/new-commission-calculations";
 import StoreDetails from "./pages/store-details/store-details";
+import Wallet from "./pages/wallet/wallet";
 
 function App() {
   const { theme, language } = useAppSelector((state) => state.settings);
@@ -54,6 +55,7 @@ function App() {
             {/* Shared routes (both agent and team_manager) */}
             <Route path="/" element={<Home />} />
             <Route path="/store/:id" element={<StoreDetails />} />
+            <Route path="/wallet" element={<Wallet />} />
             {/* Team Manager only routes */}
             <Route element={<ProtectedRoute allowedRoles={["team_manager"]} />}>
               <Route path="/agents" element={<Agents />} />

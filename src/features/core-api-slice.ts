@@ -19,7 +19,12 @@ const coreApiSlice = createApi({
         
     }),
     endpoints: () => ({}),
-    tagTypes: ['Agents','Stores','AgentStores','Markets','Activities','Commission','DashboardStats','CommissionStats'],
+    tagTypes: [
+        'Agents','Stores',
+        'AgentStores','Markets',
+        'Activities','Commission',
+        'DashboardStats','CommissionStats',
+        'Wallet','Transactions','Withdrawals'],
 
 });
 
