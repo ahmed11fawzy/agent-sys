@@ -48,7 +48,7 @@ const Activities = () => {
   });
 
   const { data, isLoading } = useGetAllActivitiesQuery(filters);
-  console.log(data);
+  console.log("activities-data", data);
 
   // Handlers
   const handleFilterChange = (key: string, value: string) => {

@@ -24,13 +24,23 @@ import type { AgentStore } from "@/types/store-type";
 import { toast } from "sonner";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 
+import { Controller } from "react-hook-form";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+
 export const NewActivityForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [createActivity, { isLoading }] = useCreateActivityMutation();
   const { data: stores, isLoading: isStoresLoading } =
     useGetAgentStoresQuery("");
-
   const form = useForm<CreateActivityFormValues>({
     resolver: zodResolver(
       createActivitySchema(t)
@@ -51,8 +61,10 @@ export const NewActivityForm = () => {
   });
 
   const onSubmit: SubmitHandler<CreateActivityFormValues> = async (data) => {
+    console.log("activity-data", data);
     try {
       // Clean up empty strings to match backend expectations
+
       const payload = {
         ...data,
         location_lat: data.location_lat === "" ? undefined : data.location_lat,
@@ -60,7 +72,7 @@ export const NewActivityForm = () => {
         duration_minutes:
           data.duration_minutes === "" ? undefined : data.duration_minutes,
       };
-
+      console.log("activity-payload", payload);
       await createActivity(payload).unwrap();
       toast.success(t("Activity created successfully"));
       navigate("/daily-visits");
@@ -79,55 +91,65 @@ export const NewActivityForm = () => {
               {/* Activity Type */}
               <Field>
                 <FieldLabel>{t("Activity Type")} *</FieldLabel>
-                <Select
-                  {...form.register("activity_type")}
-                  defaultValue="visit"
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("Select activity type")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {[
-                      "report",
-                      "meeting",
-                      "registration",
-                      "follow_up",
-                      "call",
-                      "visit",
-                    ].map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {t(type)}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Controller
+                  name="activity_type"
+                  control={form.control}
+                  render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger>
+                        <SelectValue placeholder={t("Select activity type")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {[
+                          "report",
+                          "meeting",
+                          "registration",
+                          "follow_up",
+                          "call",
+                          "visit",
+                        ].map((type) => (
+                          <SelectItem key={type} value={type}>
+                            {t(type)}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
                 <FieldError
                   errors={[
                     { message: form.formState.errors.activity_type?.message },
                   ]}
                 />
               </Field>
-
               {/* Store */}
               <Field>
                 <FieldLabel>{t("Store")} *</FieldLabel>
-                <Select
-                  {...form.register("store_id", {
-                    setValueAs: (value) => (value ? Number(value) : undefined),
-                  })}
-                  disabled={isStoresLoading}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("Select store")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {stores?.data?.map((store: AgentStore) => (
-                      <SelectItem key={store.id} value={store.id.toString()}>
-                        {store.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Controller
+                  name="store_id"
+                  control={form.control}
+                  render={({ field }) => (
+                    <Select
+                      value={field.value?.toString()}
+                      onValueChange={(value) => field.onChange(Number(value))}
+                      disabled={isStoresLoading}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder={t("Select store")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {stores?.data?.map((store: AgentStore) => (
+                          <SelectItem
+                            key={store.id}
+                            value={store.id.toString()}
+                          >
+                            {store.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
                 <FieldError
                   errors={[
                     { message: form.formState.errors.store_id?.message },
@@ -240,10 +262,72 @@ export const NewActivityForm = () => {
                 <FieldLabel htmlFor="scheduled_at">
                   {t("Scheduled At")}
                 </FieldLabel>
-                <Input
-                  id="scheduled_at"
-                  type="datetime-local"
-                  {...form.register("scheduled_at")}
+                <Controller
+                  name="scheduled_at"
+                  control={form.control}
+                  render={({ field }) => (
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal bg-transparent",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {field.value ? (
+                            format(new Date(field.value), "PPP p")
+                          ) : (
+                            <span>{t("Pick a date and time")}</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="min-w-[250px] max-w-[400px] p-0"
+                        align="start"
+                      >
+                        <Calendar
+                          className="w-full"
+                          mode="single"
+                          selected={
+                            field.value ? new Date(field.value) : undefined
+                          }
+                          onSelect={(date) => {
+                            if (date) {
+                              const current = field.value
+                                ? new Date(field.value)
+                                : new Date();
+                              date.setHours(current.getHours());
+                              date.setMinutes(current.getMinutes());
+                              field.onChange(date.toISOString());
+                            }
+                          }}
+                          initialFocus
+                        />
+                        <div className="p-3 border-t">
+                          <Input
+                            type="time"
+                            value={
+                              field.value
+                                ? format(new Date(field.value), "HH:mm")
+                                : ""
+                            }
+                            onChange={(e) => {
+                              const [hours, minutes] =
+                                e.target.value.split(":");
+                              const date = field.value
+                                ? new Date(field.value)
+                                : new Date();
+                              date.setHours(parseInt(hours));
+                              date.setMinutes(parseInt(minutes));
+                              field.onChange(date.toISOString());
+                            }}
+                          />
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  )}
                 />
                 <FieldError
                   errors={[
@@ -255,10 +339,72 @@ export const NewActivityForm = () => {
               {/* Started At */}
               <Field>
                 <FieldLabel htmlFor="started_at">{t("Started At")}</FieldLabel>
-                <Input
-                  id="started_at"
-                  type="datetime-local"
-                  {...form.register("started_at")}
+                <Controller
+                  name="started_at"
+                  control={form.control}
+                  render={({ field }) => (
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal bg-transparent",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {field.value ? (
+                            format(new Date(field.value), "PPP p")
+                          ) : (
+                            <span>{t("Pick a date and time")}</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="min-w-62.5 max-w-100 p-0"
+                        align="start"
+                      >
+                        <Calendar
+                          mode="single"
+                          className="w-full"
+                          selected={
+                            field.value ? new Date(field.value) : undefined
+                          }
+                          onSelect={(date) => {
+                            if (date) {
+                              const current = field.value
+                                ? new Date(field.value)
+                                : new Date();
+                              date.setHours(current.getHours());
+                              date.setMinutes(current.getMinutes());
+                              field.onChange(date.toISOString());
+                            }
+                          }}
+                          initialFocus
+                        />
+                        <div className="p-3 border-t">
+                          <Input
+                            type="time"
+                            value={
+                              field.value
+                                ? format(new Date(field.value), "HH:mm")
+                                : ""
+                            }
+                            onChange={(e) => {
+                              const [hours, minutes] =
+                                e.target.value.split(":");
+                              const date = field.value
+                                ? new Date(field.value)
+                                : new Date();
+                              date.setHours(parseInt(hours));
+                              date.setMinutes(parseInt(minutes));
+                              field.onChange(date.toISOString());
+                            }}
+                          />
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  )}
                 />
                 <FieldError
                   errors={[
@@ -272,10 +418,72 @@ export const NewActivityForm = () => {
                 <FieldLabel htmlFor="completed_at">
                   {t("Completed At")}
                 </FieldLabel>
-                <Input
-                  id="completed_at"
-                  type="datetime-local"
-                  {...form.register("completed_at")}
+                <Controller
+                  name="completed_at"
+                  control={form.control}
+                  render={({ field }) => (
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full bg-transparent justify-start text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {field.value ? (
+                            format(new Date(field.value), "PPP p")
+                          ) : (
+                            <span>{t("Pick a date and time")}</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="min-w-62.5 max-w-100 p-0"
+                        align="start"
+                      >
+                        <Calendar
+                          mode="single"
+                          className="w-full"
+                          selected={
+                            field.value ? new Date(field.value) : undefined
+                          }
+                          onSelect={(date) => {
+                            if (date) {
+                              const current = field.value
+                                ? new Date(field.value)
+                                : new Date();
+                              date.setHours(current.getHours());
+                              date.setMinutes(current.getMinutes());
+                              field.onChange(date.toISOString());
+                            }
+                          }}
+                          initialFocus
+                        />
+                        <div className="p-3 border-t">
+                          <Input
+                            type="time"
+                            value={
+                              field.value
+                                ? format(new Date(field.value), "HH:mm")
+                                : ""
+                            }
+                            onChange={(e) => {
+                              const [hours, minutes] =
+                                e.target.value.split(":");
+                              const date = field.value
+                                ? new Date(field.value)
+                                : new Date();
+                              date.setHours(parseInt(hours));
+                              date.setMinutes(parseInt(minutes));
+                              field.onChange(date.toISOString());
+                            }}
+                          />
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  )}
                 />
                 <FieldError
                   errors={[
@@ -307,7 +515,7 @@ export const NewActivityForm = () => {
               >
                 {t("Cancel")}
               </Button>
-              <Button type="submit" disabled={isLoading}>
+              <Button type="submit" variant="primary" disabled={isLoading}>
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {t("Create Activity")}
               </Button>

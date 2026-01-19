@@ -21,6 +21,7 @@ import NewActivity from "./pages/new-activity/new-activity";
 import NewCommission from "./pages/new-commission/new-commission";
 import AgentCommissions from "./pages/agent-commissions/agent-commissions";
 import NewCommissionCalculations from "./pages/new-calculations/new-commission-calculations";
+import StoreDetails from "./pages/store-details/store-details";
 
 function App() {
   const { theme, language } = useAppSelector((state) => state.settings);
@@ -52,7 +53,7 @@ function App() {
           <Route element={<Layout />}>
             {/* Shared routes (both agent and team_manager) */}
             <Route path="/" element={<Home />} />
-
+            <Route path="/store/:id" element={<StoreDetails />} />
             {/* Team Manager only routes */}
             <Route element={<ProtectedRoute allowedRoles={["team_manager"]} />}>
               <Route path="/agents" element={<Agents />} />

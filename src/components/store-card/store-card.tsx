@@ -1,15 +1,21 @@
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { type AgentStore } from "@/types/store-type";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { CheckIcon, Eye, MapPin, Phone, Trash, User } from "lucide-react";
+import { Eye, MapPin, Phone, Trash, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { ShinyButton } from "../ui/shiny-button";
 import { Badge } from "../ui/badge";
+import { useNavigate } from "react-router-dom";
+import { encodeToFakeUuid } from "@/lib/uuid-obfuscator";
 
 const StoreCard = ({ store }: { store: AgentStore }) => {
   const { t } = useTranslation();
   console.log("store", store);
-
+  const navigate = useNavigate();
+  const handleViewStore = (id: number) => {
+    const hashId = encodeToFakeUuid(id);
+    navigate(`/store/${hashId}`);
+  };
   return (
     <Card>
       <CardHeader className="h-24 bg-linear-to-br  from-accent to-accent/20">
@@ -30,7 +36,7 @@ const StoreCard = ({ store }: { store: AgentStore }) => {
           <Badge variant="destructive">{t(store.business.status)}</Badge>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col gap-2 mt-2">
         <p className="text-sm text-muted-foreground flex items-center gap-2">
           <User size={16} />
           {store.user.name}
@@ -45,12 +51,10 @@ const StoreCard = ({ store }: { store: AgentStore }) => {
         </p>
       </CardContent>
       <CardFooter className="flex items-center gap-2">
-        <ShinyButton className="">
+        <ShinyButton className="" onClick={() => handleViewStore(store.id)}>
           <Eye size={16} className="text-muted-foreground" />
         </ShinyButton>
-        <ShinyButton className="text-muted-foreground">
-          <CheckIcon size={16} className="text-muted-foreground" />
-        </ShinyButton>
+
         <ShinyButton className="text-muted-foreground">
           <Trash size={16} className="text-muted-foreground" />
         </ShinyButton>

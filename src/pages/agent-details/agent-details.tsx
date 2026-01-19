@@ -7,10 +7,8 @@ import { decodeFromFakeUuid } from "@/lib/uuid-obfuscator";
 import {
   Activity,
   AlertTriangleIcon,
-  ArrowUp,
   Banknote,
   CircleCheckBig,
-  DollarSign,
   Store,
   Target,
   User,
