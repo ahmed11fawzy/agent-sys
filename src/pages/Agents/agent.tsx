@@ -14,6 +14,14 @@ import AgentSkeleton from "@/components/agent-card/agent-skeleton";
 import Header from "@/components/page-header/Header";
 import { useTranslation } from "react-i18next";
 import { motion } from "motion/react";
+import { useDebounce } from "@/hooks/use-debounce";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Agents = () => {
   const { t } = useTranslation();
@@ -21,10 +29,14 @@ const Agents = () => {
   // State for filters
   const [page, setPage] = useState(1);
   const [per_page, setPerPage] = useState(10);
-  const [status, setStatus] = useState("");
-  const [salary_type, setSalaryType] = useState("");
-  const [team_id, setTeamId] = useState("");
-  const [is_online, setIsOnline] = useState("");
+
+  // Filters
+  const [name, setName] = useState("");
+  const [status, setStatus] = useState<string>("all");
+  const [salary_type, setSalaryType] = useState<string>("all");
+  const [is_online, setIsOnline] = useState<string>("all");
+
+  const debouncedName = useDebounce(name, 500);
 
   // API Query
   const [getAgents] = useLazyGetAgentsQuery();
@@ -41,10 +53,10 @@ const Agents = () => {
       const filterQuery = new URLSearchParams({
         page: page.toString(),
         per_page: pageSize.toString(),
-        ...(status && { status }),
-        ...(salary_type && { salary_type }),
-        ...(team_id && { team_id }),
-        ...(is_online && { is_online }),
+        ...(debouncedName && { name: debouncedName }),
+        ...(status && status !== "all" && { status }),
+        ...(salary_type && salary_type !== "all" && { salary_type }),
+        ...(is_online && is_online !== "all" && { is_online }),
       }).toString();
 
       try {
@@ -60,7 +72,7 @@ const Agents = () => {
         throw error;
       }
     },
-    [status, salary_type, team_id, is_online, getAgents]
+    [debouncedName, status, salary_type, is_online, getAgents]
   );
 
   // Initialize Infinite Scroll Hook
@@ -85,7 +97,7 @@ const Agents = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: index * 0.1 }}
       >
-        <AgentCard agent={agent} />,
+        <AgentCard agent={agent} />
       </motion.div>
     ),
     []
@@ -109,18 +121,56 @@ const Agents = () => {
         </Button>
       </header>
 
-      {/* Filter Section (Basic placeholder for now, expandable) */}
+      {/* Filter Section */}
       <Card className="mb-6 relative overflow-hidden">
         <CardHeader>
           <CardTitle>{t("Filters")}</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {/* Search by Name */}
           <Input
             placeholder={t("Search by name...")}
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
-          {/* Add more filter inputs here as needed */}
+
+          {/* Status Filter */}
+          <Select value={status} onValueChange={setStatus}>
+            <SelectTrigger>
+              <SelectValue placeholder={t("Select Status")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t("All Statuses")}</SelectItem>
+              <SelectItem value="active">{t("Active")}</SelectItem>
+              <SelectItem value="inactive">{t("Inactive")}</SelectItem>
+              <SelectItem value="suspended">{t("Suspended")}</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Salary Type Filter */}
+          <Select value={salary_type} onValueChange={setSalaryType}>
+            <SelectTrigger>
+              <SelectValue placeholder={t("Select Salary Type")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t("All Salary Types")}</SelectItem>
+              <SelectItem value="fixed">{t("Fixed")}</SelectItem>
+              <SelectItem value="commission">{t("Commission")}</SelectItem>
+              <SelectItem value="mixed">{t("Mixed")}</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Online Status Filter */}
+          <Select value={is_online} onValueChange={setIsOnline}>
+            <SelectTrigger>
+              <SelectValue placeholder={t("Select Online Status")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t("All")}</SelectItem>
+              <SelectItem value="1">{t("Online")}</SelectItem>
+              <SelectItem value="0">{t("Offline")}</SelectItem>
+            </SelectContent>
+          </Select>
         </CardContent>
         <BorderBeam size={150} duration={12} delay={9} />
       </Card>

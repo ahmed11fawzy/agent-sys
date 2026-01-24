@@ -130,7 +130,7 @@ export const useInfiniteScroll = <T,>({
         abortControllerRef.current.abort();
       }
     };
-  }, [enabled, initialPage]);
+  }, [enabled, initialPage, fetchData]);
 
   return {
     items,
